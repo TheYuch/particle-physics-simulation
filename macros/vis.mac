@@ -1,0 +1,64 @@
+# Set verbosities
+/control/verbose 0
+/run/verbose 0
+/process/had/verbose 0
+/process/em/verbose 0
+
+# ---------------------------------------------------------------------
+
+# Change the default number of threads (in multi-threaded mode)
+# /run/numberOfThreads 4
+
+# Initialize kernel
+/run/initialize
+
+# ---------------------------------------------------------------------
+
+# Create an OpenGL view
+/vis/open OGL 600x600-0+0
+
+# Disable auto refresh and quieten vis messages whilst scene and trajectories are established
+/vis/viewer/set/autoRefresh false
+/vis/verbose errors
+
+# Draw geometry
+/vis/drawVolume
+
+# Specify view angle
+/vis/viewer/set/viewpointVector -1 0 0
+/vis/viewer/set/lightsVector -1 0 0
+
+# Specify style (surface, wireframe, auxiliary edges,...)
+/vis/viewer/set/style wireframe
+/vis/viewer/set/auxiliaryEdge true
+/vis/viewer/set/lineSegmentsPerCircle 100
+
+# Draw smooth trajectories at end of event, showing trajectory points as markers 2 pixels wide
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 2
+
+# Select colour by particle ID
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
+
+# Override default colours
+/vis/modeling/trajectories/drawByParticleID-0/setRGBA opticalphoton 0.9 0.25 0.7 0.5
+
+# To superimpose all of the events from a given run:
+/vis/scene/endOfEventAction accumulate
+
+# Decorations
+/vis/scene/add/scale   # Simple scale line
+/vis/scene/add/axes    # Simple axes: x=red, y=green, z=blue.
+
+# Make the "World" box invisible
+/vis/geometry/set/visibility World 0 false
+/vis/viewer/set/style surface
+/vis/viewer/set/hiddenMarker true
+/vis/viewer/set/viewpointThetaPhi 120 150
+
+# Re-establish auto refreshing and verbosity
+/vis/viewer/set/autoRefresh true
+/vis/verbose warnings
