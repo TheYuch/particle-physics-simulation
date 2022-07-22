@@ -1,9 +1,9 @@
-#include "G4HCofThisEvent.hh"
-#include "G4Step.hh"
-#include "G4String.hh"
-#include "G4TouchableHistory.hh"
-#include "G4OpticalPhoton.hh"
-#include "G4SDManager.hh"
+#include <G4HCofThisEvent.hh>
+#include <G4Step.hh>
+#include <G4String.hh>
+#include <G4TouchableHistory.hh>
+#include <G4OpticalPhoton.hh>
+#include <G4SDManager.hh>
 
 #include "detectors/CaloSD.hh"
 #include "detectors/CaloHit.hh"
@@ -29,7 +29,7 @@ void CaloSD::Initialize(G4HCofThisEvent* HCE)
     fHitsCollection = new CaloHitsCollection(SensitiveDetectorName, collectionName[0]);
 
     static G4int HCID = -1;
-    if (HCID < 0) HCID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
+    if (HCID < 0) HCID = G4SDManager::GetSDMpointer()->GetCollectionID(fHitsCollection);
 
     HCE->AddHitsCollection(HCID, fHitsCollection);
 }
@@ -93,7 +93,6 @@ void CaloSD::EndOfEvent(G4HCofThisEvent* HCE)
     for (G4int i = 0; i < nHits; i++)
     {
         auto h = (*fHitsCollection)[i];
-        // h->Print(); // TODO: add all hits into root data, and upload into TClonesArrays
 
         data = caloDataMap[h->GetCaloID()];
         if (!data)

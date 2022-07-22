@@ -13,6 +13,7 @@
 
 #include "G4SDManager.hh"
 #include "detectors/CaloSD.hh"
+#include "detectors/SipmSD.hh"
 
 namespace Test
 {
@@ -232,10 +233,13 @@ void DetectorConstruction::ConstructSDandField()
 {
   CaloSD* caloSD = new CaloSD("Calorimeter");
   G4SDManager::GetSDMpointer()->AddNewDetector(caloSD);
-
   fCaloLV->SetSensitiveDetector(caloSD);
 
-  // TODO
+  SipmSD* sipmSD = new SipmSD("SiPM");
+  G4SDManager::GetSDMpointer()->AddNewDetector(sipmSD);
+  fSipmLV->SetSensitiveDetector(sipmSD);
+
+  // TODO - make abstract, and/or use data json files / gdml
 }
 
 }

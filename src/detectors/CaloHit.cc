@@ -40,6 +40,8 @@ G4bool CaloHit::CheckIDMatch(G4int caloID, G4int trackID)
 void CaloHit::AddData(G4double edep)
 {
     fEdep += edep;
+
+    // TODO: record something else with individual edeps, such as edep/distance (dE/dx) {opt: vs time}?
 }
 
 void CaloHit::Print()

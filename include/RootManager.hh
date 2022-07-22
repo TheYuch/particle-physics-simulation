@@ -10,6 +10,7 @@ class TFile;
 class TTree;
 
 class CaloData;
+class SipmData;
 
 namespace Test
 {
@@ -30,6 +31,7 @@ public:
     TString GetFileName() { return fFileName; };
     
     CaloData* GetNewCalo();
+    SipmData* GetNewSipm();
 
     // setters
     void SetFileName(TString newName) { if (!fIsOpen) fFileName = newName; };
@@ -50,6 +52,7 @@ private:
 
     // data fields
     TClonesArray* fCaloVec;
+    TClonesArray* fSipmVec;
 };
 
 }

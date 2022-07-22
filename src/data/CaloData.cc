@@ -18,6 +18,7 @@ void CaloData::Clear(Option_t* option)
 
 void CaloData::Print(Option_t* option) const
 {
+    std::cout << "Calo: " << caloID << std::endl;
     for (size_t i = 0; i < edep.size(); i++) {
         std::cout << " > edep: " << edep.at(i) << std::endl;
     }

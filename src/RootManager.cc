@@ -13,6 +13,7 @@
 #include "Constants.hh"
 
 #include "data/CaloData.hh"
+#include "data/SipmData.hh"
 
 #include "G4Run.hh"
 #include "G4RunManager.hh"
@@ -37,7 +38,8 @@ RootManager::RootManager()
         InitializeFromGlobal();
     }
 
-    fCaloVec = new TClonesArray("CaloData", 10);
+    fCaloVec = new TClonesArray("CaloData", 5);
+    fSipmVec = new TClonesArray("SipmData", 10);
 }
 
 RootManager::~RootManager()
@@ -47,7 +49,9 @@ RootManager::~RootManager()
     }
     
     fCaloVec->Delete();
+    fSipmVec->Delete();
     delete fCaloVec;
+    delete fSipmVec;
 }
 
 RootManager* RootManager::fTheGlobalInstance = nullptr;
@@ -123,6 +127,7 @@ bool RootManager::Open()
     // With the file open, start generating objects
     fTheTree = new TTree("sim", "sim");
     fTheTree->Branch("calo", "TClonesArray", &fCaloVec, 32000, 99);
+    fTheTree->Branch("sipm", "TClonesArray", &fSipmVec, 32000, 99);
     
 
     // Return
@@ -140,6 +145,7 @@ Int_t RootManager::Fill()
     }
 
     fCaloVec->Clear("C");
+    fSipmVec->Clear("C");
     
     return nBytes;
 }
@@ -174,6 +180,12 @@ bool RootManager::WriteAndClose()
 CaloData* RootManager::GetNewCalo()
 {
     CaloData* ret = (CaloData*)fCaloVec->ConstructedAt(fCaloVec->GetEntries()); // fCaloVec->GetEntries() is index of element past the last one, which the function gets, maybe allocates, and returns
+    return ret;
+}
+
+SipmData* RootManager::GetNewSipm()
+{
+    SipmData* ret = (SipmData*)fSipmVec->ConstructedAt(fSipmVec->GetEntries());
     return ret;
 }
 

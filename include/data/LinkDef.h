@@ -7,6 +7,6 @@
 #pragma link off all functions;
 
 #pragma link C++ class CaloData+;
-//#pragma link C++ class SipmData+;
+#pragma link C++ class SipmData+;
 
 #endif

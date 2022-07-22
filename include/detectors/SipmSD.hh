@@ -1,6 +1,6 @@
 #pragma once
 
-#include "detectors/CaloHit.hh"
+#include "detectors/SipmHit.hh"
 #include <G4VSensitiveDetector.hh>
 
 #include <map>
@@ -13,18 +13,18 @@ class G4TouchableHistory;
 namespace Test
 {
 
-class CaloSD : public G4VSensitiveDetector
+class SipmSD : public G4VSensitiveDetector
 {
 public:
-    CaloSD(G4String name);
-    ~CaloSD();
+    SipmSD(G4String name);
+    ~SipmSD();
 
     virtual void Initialize(G4HCofThisEvent* HCE) override;
     virtual G4bool ProcessHits(G4Step* step, G4TouchableHistory* history) override;
     virtual void EndOfEvent(G4HCofThisEvent* HCE) override;
 
 private:
-    CaloHitsCollection* fHitsCollection;
+    SipmHitsCollection* fHitsCollection;
 
     std::map<int, int> fParentList;
 };
