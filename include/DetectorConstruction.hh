@@ -1,6 +1,6 @@
 #pragma once
 
-#include "G4VUserDetectorConstruction.hh"
+#include <G4VUserDetectorConstruction.hh>
 
 class G4VPhysicalVolume;
 class G4LogicalVolume;

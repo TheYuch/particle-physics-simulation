@@ -1,6 +1,6 @@
 #pragma once
 
-#include "G4UserRunAction.hh"
+#include <G4UserRunAction.hh>
 
 class G4Run;
 

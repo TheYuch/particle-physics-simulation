@@ -1,5 +1,5 @@
 #include "detectors/CaloHit.hh"
-#include "G4UnitsTable.hh"
+#include <G4UnitsTable.hh>
 
 namespace Test
 {

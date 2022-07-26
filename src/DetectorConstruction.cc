@@ -1,17 +1,17 @@
 #include "DetectorConstruction.hh"
 
-#include "G4VisAttributes.hh"
-#include "G4Colour.hh"
+#include <G4VisAttributes.hh>
+#include <G4Colour.hh>
 
-#include "G4RunManager.hh"
-#include "G4NistManager.hh"
+#include <G4RunManager.hh>
+#include <G4NistManager.hh>
 
-#include "G4Box.hh"
-#include "G4LogicalVolume.hh"
-#include "G4PVPlacement.hh"
-#include "G4SystemOfUnits.hh"
+#include <G4Box.hh>
+#include <G4LogicalVolume.hh>
+#include <G4PVPlacement.hh>
+#include <G4SystemOfUnits.hh>
 
-#include "G4SDManager.hh"
+#include <G4SDManager.hh>
 #include "detectors/CaloSD.hh"
 #include "detectors/SipmSD.hh"
 

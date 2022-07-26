@@ -1,6 +1,6 @@
 #pragma once
 
-#include "G4VUserActionInitialization.hh"
+#include <G4VUserActionInitialization.hh>
 
 namespace Test
 {

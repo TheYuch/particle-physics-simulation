@@ -3,7 +3,6 @@
 #include <G4String.hh>
 #include <G4TouchableHistory.hh>
 #include <G4OpticalPhoton.hh>
-#include <G4SDManager.hh>
 
 #include "detectors/SipmSD.hh"
 #include "detectors/SipmHit.hh"
@@ -29,7 +28,7 @@ void SipmSD::Initialize(G4HCofThisEvent* HCE)
     fHitsCollection = new SipmHitsCollection(SensitiveDetectorName, collectionName[0]);
 
     static G4int HCID = -1;
-    if (HCID < 0) HCID = G4SDManager::GetSDMpointer()->GetCollectionID(fHitsCollection);
+    if (HCID < 0) HCID = GetCollectionID(0);
 
     HCE->AddHitsCollection(HCID, fHitsCollection);
 }

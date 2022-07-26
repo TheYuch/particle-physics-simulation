@@ -1,6 +1,6 @@
 #pragma once
 
-#include "G4UserSteppingAction.hh"
+#include <G4UserSteppingAction.hh>
 
 class G4Step;
 

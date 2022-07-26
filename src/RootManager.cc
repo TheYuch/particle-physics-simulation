@@ -15,9 +15,9 @@
 #include "data/CaloData.hh"
 #include "data/SipmData.hh"
 
-#include "G4Run.hh"
-#include "G4RunManager.hh"
-#include "G4AutoLock.hh"
+#include <G4Run.hh>
+#include <G4RunManager.hh>
+#include <G4AutoLock.hh>
 
 namespace {
     G4Mutex mutexFileIO = G4MUTEX_INITIALIZER;

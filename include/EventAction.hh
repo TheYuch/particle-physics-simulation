@@ -1,6 +1,6 @@
 #pragma once
 
-#include "G4UserEventAction.hh"
+#include <G4UserEventAction.hh>
 #include "globals.hh"
 
 namespace Test

@@ -1,5 +1,5 @@
-#include "G4VUserPrimaryGeneratorAction.hh"
-#include "G4ParticleGun.hh"
+#include <G4VUserPrimaryGeneratorAction.hh>
+#include <G4ParticleGun.hh>
 
 class G4ParticleGun;
 class G4Event;

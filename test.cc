@@ -1,19 +1,16 @@
-#include "TROOT.h"
+#include <TROOT.h>
+
+#include <G4RunManagerFactory.hh>
+#include <G4UImanager.hh>
+
+#include <G4VisExecutive.hh>
+#include <G4UIExecutive.hh>
 
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
 
-#include "G4RunManagerFactory.hh"
-#include "G4UImanager.hh"
-#include "QBBC.hh"
-
 #include "FTFP_BERT.hh"
-#include "G4OpticalPhysics.hh"
-
-#include "G4VisExecutive.hh"
-#include "G4UIExecutive.hh"
-
-#include "Randomize.hh"
+#include <G4OpticalPhysics.hh>
 
 using namespace Test;
 
