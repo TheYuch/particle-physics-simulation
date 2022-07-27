@@ -2,7 +2,7 @@
 
 #include <TObject.h>
 
-class SipmData : public TObject
+class SipmRootData : public TObject
 {
 private:
     Int_t sipmID;
@@ -11,17 +11,17 @@ private:
     std::vector<Float_t> times;
 
 public:
-    SipmData();
-    ~SipmData();
+    SipmRootData();
+    ~SipmRootData();
 
     virtual void Clear(Option_t* option="");
     virtual void Print(Option_t* option="") const;
 
     void AddData(Float_t time);
 
-    Int_t GetSipmID() {return sipmID; };
+    Int_t GetSipmID() { return sipmID; };
 
-    void SetSipmID(Int_t id) {sipmID = id; };
+    void SetSipmID(Int_t id) { sipmID = id; };
 
-    ClassDef(SipmData, 1);
+    ClassDef(SipmRootData, 1);
 };

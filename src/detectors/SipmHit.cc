@@ -13,13 +13,6 @@ SipmHit::SipmHit()
 , fTime(-1)
 {}
 
-SipmHit::SipmHit(const SipmHit& other)
-: G4VHit()
-, fSipmID(other.fSipmID)
-, fTrackID(other.fTrackID)
-, fTime(other.fTime)
-{}
-
 SipmHit::~SipmHit()
 {}
 

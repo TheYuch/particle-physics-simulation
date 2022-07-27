@@ -13,13 +13,6 @@ DetectorHit::DetectorHit()
 , fData()
 {}
 
-DetectorHit::DetectorHit(const DetectorHit& other)
-: G4VHit()
-, fDetectorID(other.fDetectorID)
-, fTrackID(other.fTrackID)
-, fData(other.fData)
-{}
-
 DetectorHit::~DetectorHit()
 {
     delete fData;
@@ -34,7 +27,7 @@ const DetectorHit& DetectorHit::operator=(const DetectorHit& other)
     return *this;
 }
 
-G4bool DetectorHit::CheckIDMatch(G4int detectorID, G4int trackID)
+G4bool DetectorHit::CheckIDMatch(G4int detectorID, G4int trackID) const
 {
     return (detectorID == fDetectorID) && (trackID == fTrackID);
 }

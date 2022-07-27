@@ -38,11 +38,11 @@ include("${ROOT_DIR}/RootMacros.cmake")
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
-file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/src/detectors/*.cc)
-file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/*.hh)
+file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/src/detectors/*.cc ${PROJECT_SOURCE_DIR}/src/detectors/hitdata/*.cc)
+file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/hitdata/*.hh)
 
-file(GLOB ROOT_DATA_SOURCES ${PROJECT_SOURCE_DIR}/src/data/*.cc)
-file(GLOB ROOT_DATA_HEADERS ${PROJECT_SOURCE_DIR}/include/data/*.hh)
+file(GLOB ROOT_DATA_SOURCES ${PROJECT_SOURCE_DIR}/src/rootdata/*.cc)
+file(GLOB ROOT_DATA_HEADERS ${PROJECT_SOURCE_DIR}/include/rootdata/*.hh)
 
 
 #----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ target_link_libraries(RootDict ${ROOT_LIBRARIES})
 
 root_generate_dictionary(genRootDict ${ROOT_DATA_HEADERS}
       MODULE RootDict
-      LINKDEF ${PROJECT_SOURCE_DIR}/include/data/LinkDef.h
+      LINKDEF ${PROJECT_SOURCE_DIR}/include/rootdata/LinkDef.h
       )
 
 

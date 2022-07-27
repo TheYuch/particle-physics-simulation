@@ -1,22 +1,22 @@
-#include "data/CaloData.hh"
+#include "rootdata/CaloRootData.hh"
 #include <iostream>
 
-ClassImp(CaloData)
+ClassImp(CaloRootData)
 
-CaloData::CaloData()
+CaloRootData::CaloRootData()
 : TObject()
 , caloID(0)
 {}
 
-CaloData::~CaloData()
+CaloRootData::~CaloRootData()
 {}
 
-void CaloData::Clear(Option_t* option)
+void CaloRootData::Clear(Option_t* option)
 {
     edep.clear();
 }
 
-void CaloData::Print(Option_t* option) const
+void CaloRootData::Print(Option_t* option) const
 {
     std::cout << "Calo: " << caloID << std::endl;
     for (size_t i = 0; i < edep.size(); i++) {
@@ -24,7 +24,7 @@ void CaloData::Print(Option_t* option) const
     }
 }
 
-void CaloData::AddData(Float_t energy)
+void CaloRootData::AddData(Float_t energy)
 {
     edep.push_back(energy);
 }

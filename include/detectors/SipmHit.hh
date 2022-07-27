@@ -12,7 +12,6 @@ class SipmHit : public G4VHit
 {
 public:
     SipmHit();
-    SipmHit(const SipmHit& other);
     ~SipmHit();
 
     // operators

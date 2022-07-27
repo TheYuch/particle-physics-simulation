@@ -8,7 +8,7 @@
 #include "detectors/CaloHit.hh"
 
 #include "RootManager.hh"
-#include "data/CaloData.hh"
+#include "rootdata/CaloRootData.hh"
 
 namespace Test
 {
@@ -85,22 +85,22 @@ G4bool CaloSD::ProcessHits(G4Step* step, G4TouchableHistory*)
 
 void CaloSD::EndOfEvent(G4HCofThisEvent* HCE)
 {
-    std::map<int, CaloData*> caloDataMap; // id <-> CaloData
+    std::map<int, CaloRootData*> caloRootDataMap;
 
-    CaloData* data = nullptr;
+    CaloRootData* data = nullptr;
     G4int nHits = fHitsCollection->entries();
     for (G4int i = 0; i < nHits; i++)
     {
         auto h = (*fHitsCollection)[i];
 
-        data = caloDataMap[h->GetCaloID()];
+        data = caloRootDataMap[h->GetCaloID()];
         if (!data)
         {
-            data = RootManager::Instance()->GetNewCalo();
+            data = RootManager::Instance()->GetNewCaloRootData();
 
             G4int caloID = h->GetCaloID();
             data->SetCaloID(caloID);
-            caloDataMap[caloID] = data;
+            caloRootDataMap[caloID] = data;
         }
 
         data->AddData(h->GetEdep());

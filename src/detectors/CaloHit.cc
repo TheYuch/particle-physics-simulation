@@ -13,13 +13,6 @@ CaloHit::CaloHit()
 , fEdep(0)
 {}
 
-CaloHit::CaloHit(const CaloHit& other)
-: G4VHit()
-, fCaloID(other.fCaloID)
-, fTrackID(other.fTrackID)
-, fEdep(other.fEdep)
-{}
-
 CaloHit::~CaloHit()
 {}
 

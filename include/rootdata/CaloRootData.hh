@@ -3,7 +3,7 @@
 #include <TObject.h>
 // #include <TVector3.h>
 
-class CaloData : public TObject
+class CaloRootData : public TObject
 {
 private:
     Int_t caloID;
@@ -11,17 +11,17 @@ private:
     std::vector<Float_t> edep;
 
 public:
-    CaloData();
-    ~CaloData();
+    CaloRootData();
+    ~CaloRootData();
 
     virtual void Clear(Option_t* option="");
     virtual void Print(Option_t* option="") const;
 
     void AddData(Float_t energy);
 
-    Int_t GetCaloID() {return caloID; };
+    Int_t GetCaloID() { return caloID; };
 
-    void SetCaloID(Int_t id) {caloID = id; };
+    void SetCaloID(Int_t id) { caloID = id; };
 
-    ClassDef(CaloData, 1);
+    ClassDef(CaloRootData, 1);
 };

@@ -12,7 +12,6 @@ class CaloHit : public G4VHit
 {
 public:
     CaloHit();
-    CaloHit(const CaloHit& other);
     ~CaloHit();
 
     // operators

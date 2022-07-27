@@ -12,8 +12,8 @@
 #include "RootManager.hh"
 #include "Constants.hh"
 
-#include "data/CaloData.hh"
-#include "data/SipmData.hh"
+#include "rootdata/CaloRootData.hh"
+#include "rootdata/SipmRootData.hh"
 
 #include <G4Run.hh>
 #include <G4RunManager.hh>
@@ -38,8 +38,8 @@ RootManager::RootManager()
         InitializeFromGlobal();
     }
 
-    fCaloVec = new TClonesArray("CaloData", 5);
-    fSipmVec = new TClonesArray("SipmData", 10);
+    fCaloVec = new TClonesArray("CaloRootData", 5);
+    fSipmVec = new TClonesArray("SipmRootData", 10);
 }
 
 RootManager::~RootManager()
@@ -177,15 +177,15 @@ bool RootManager::WriteAndClose()
     return true;
 }
 
-CaloData* RootManager::GetNewCalo()
+CaloRootData* RootManager::GetNewCaloRootData()
 {
-    CaloData* ret = (CaloData*)fCaloVec->ConstructedAt(fCaloVec->GetEntries()); // fCaloVec->GetEntries() is index of element past the last one, which the function gets, maybe allocates, and returns
+    CaloRootData* ret = (CaloRootData*)fCaloVec->ConstructedAt(fCaloVec->GetEntries()); // fCaloVec->GetEntries() is index of element past the last one, which the function gets, maybe allocates, and returns
     return ret;
 }
 
-SipmData* RootManager::GetNewSipm()
+SipmRootData* RootManager::GetNewSipmRootData()
 {
-    SipmData* ret = (SipmData*)fSipmVec->ConstructedAt(fSipmVec->GetEntries());
+    SipmRootData* ret = (SipmRootData*)fSipmVec->ConstructedAt(fSipmVec->GetEntries());
     return ret;
 }
 

@@ -9,8 +9,8 @@
 class TFile;
 class TTree;
 
-class CaloData;
-class SipmData;
+class CaloRootData;
+class SipmRootData;
 
 namespace Test
 {
@@ -30,8 +30,8 @@ public:
     // getters
     TString GetFileName() { return fFileName; };
     
-    CaloData* GetNewCalo();
-    SipmData* GetNewSipm();
+    CaloRootData* GetNewCaloRootData();
+    SipmRootData* GetNewSipmRootData();
 
     // setters
     void SetFileName(TString newName) { if (!fIsOpen) fFileName = newName; };

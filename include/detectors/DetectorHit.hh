@@ -14,7 +14,6 @@ class DetectorHit : public G4VHit
 {
 public:
     DetectorHit();
-    DetectorHit(const DetectorHit& other);
     ~DetectorHit();
 
     // operators

@@ -8,7 +8,7 @@
 #include "detectors/SipmHit.hh"
 
 #include "RootManager.hh"
-#include "data/SipmData.hh"
+#include "rootdata/SipmRootData.hh"
 
 namespace Test
 {
@@ -85,22 +85,22 @@ G4bool SipmSD::ProcessHits(G4Step* step, G4TouchableHistory*)
 
 void SipmSD::EndOfEvent(G4HCofThisEvent* HCE)
 {
-    std::map<int, SipmData*> sipmDataMap;
+    std::map<int, SipmRootData*> sipmRootDataMap;
 
-    SipmData* data = nullptr;
+    SipmRootData* data = nullptr;
     G4int nHits = fHitsCollection->entries();
     for (G4int i = 0; i < nHits; i++)
     {
         auto h = (*fHitsCollection)[i];
 
-        data = sipmDataMap[h->GetSipmID()];
+        data = sipmRootDataMap[h->GetSipmID()];
         if (!data)
         {
-            data = RootManager::Instance()->GetNewSipm();
+            data = RootManager::Instance()->GetNewSipmRootData();
 
             G4int sipmID = h->GetSipmID();
             data->SetSipmID(sipmID);
-            sipmDataMap[sipmID] = data;
+            sipmRootDataMap[sipmID] = data;
         }
 
         data->AddData(h->GetTime());

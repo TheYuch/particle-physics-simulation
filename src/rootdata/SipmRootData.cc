@@ -1,24 +1,24 @@
-#include "data/SipmData.hh"
+#include "rootdata/SipmRootData.hh"
 #include <iostream>
 
-ClassImp(SipmData)
+ClassImp(SipmRootData)
 
-SipmData::SipmData()
+SipmRootData::SipmRootData()
 : TObject()
 , sipmID(0)
 , nHits(0)
 {}
 
-SipmData::~SipmData()
+SipmRootData::~SipmRootData()
 {}
 
-void SipmData::Clear(Option_t* option)
+void SipmRootData::Clear(Option_t* option)
 {
     nHits = 0;
     times.clear();
 }
 
-void SipmData::Print(Option_t* option) const
+void SipmRootData::Print(Option_t* option) const
 {
     std::cout << "Sipm: " << sipmID << ", number of hits: " << nHits << std::endl;
     for (size_t i = 0; i < times.size(); i++) {
@@ -26,7 +26,7 @@ void SipmData::Print(Option_t* option) const
     }
 }
 
-void SipmData::AddData(Float_t time)
+void SipmRootData::AddData(Float_t time)
 {
     nHits++;
     times.push_back(time);
