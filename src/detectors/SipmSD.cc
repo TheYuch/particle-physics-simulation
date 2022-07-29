@@ -5,7 +5,8 @@
 #include <G4OpticalPhoton.hh>
 
 #include "detectors/SipmSD.hh"
-#include "detectors/SipmHit.hh"
+#include "detectors/DetectorHit.hh"
+#include "detectors/hitdata/SipmHitData.hh"
 
 #include "RootManager.hh"
 #include "rootdata/SipmRootData.hh"
@@ -25,7 +26,7 @@ SipmSD::~SipmSD()
 
 void SipmSD::Initialize(G4HCofThisEvent* HCE)
 {
-    fHitsCollection = new SipmHitsCollection(SensitiveDetectorName, collectionName[0]);
+    fHitsCollection = new DetectorHitsCollection(SensitiveDetectorName, collectionName[0]);
 
     static G4int HCID = -1;
     if (HCID < 0) HCID = GetCollectionID(0);
@@ -35,7 +36,7 @@ void SipmSD::Initialize(G4HCofThisEvent* HCE)
 
 G4bool SipmSD::ProcessHits(G4Step* step, G4TouchableHistory*)
 {
-    G4int sipmID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
+    G4int detectorID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
     G4int trackID = step->GetTrack()->GetTrackID();
     
     G4int ancestorID = fParentList[trackID];
@@ -49,28 +50,27 @@ G4bool SipmSD::ProcessHits(G4Step* step, G4TouchableHistory*)
         fParentList[trackID] = ancestorID;
     }
 
-    SipmHit* newHit = nullptr;
+    DetectorHit* newHit = nullptr;
     G4int nHits = fHitsCollection->entries();
     for (G4int i = 0; i < nHits; i++)
     {
         auto h = (*fHitsCollection)[i];
-        if (h->CheckIDMatch(sipmID, ancestorID)) {
+        if (h->CheckIDMatch(detectorID, ancestorID)) {
             newHit = h;
             break;
         }
     }
     if (!newHit)
     {
-        newHit = new SipmHit();
-        newHit->SetSipmID(sipmID);
+        newHit = new DetectorHit(new SipmHitData());
+        newHit->SetDetectorID(detectorID);
         newHit->SetTrackID(trackID);
         fHitsCollection->insert(newHit);
     }
 
     if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition())
     {
-        G4double time = step->GetPostStepPoint()->GetGlobalTime();
-        newHit->AddData(time);
+        newHit->UpdateData(step);
 
         // Once a photon hits an optical sensitive detector, kill it
         step->GetTrack()->SetTrackStatus(fKillTrackAndSecondaries);
@@ -92,18 +92,18 @@ void SipmSD::EndOfEvent(G4HCofThisEvent* HCE)
     for (G4int i = 0; i < nHits; i++)
     {
         auto h = (*fHitsCollection)[i];
+        G4int detectorID = h->GetDetectorID();
 
-        data = sipmRootDataMap[h->GetSipmID()];
+        data = sipmRootDataMap[detectorID];
         if (!data)
         {
             data = RootManager::Instance()->GetNewSipmRootData();
 
-            G4int sipmID = h->GetSipmID();
-            data->SetSipmID(sipmID);
-            sipmRootDataMap[sipmID] = data;
+            data->SetSipmID(detectorID);
+            sipmRootDataMap[detectorID] = data;
         }
 
-        data->AddData(h->GetTime());
+        data->AddData(h->GetData());
     }
 
     fParentList.clear();

@@ -1,6 +1,9 @@
 #include "rootdata/CaloRootData.hh"
 #include <iostream>
 
+#include "detectors/HitData.hh"
+#include "detectors/hitdata/CaloHitData.hh"
+
 ClassImp(CaloRootData)
 
 CaloRootData::CaloRootData()
@@ -24,7 +27,8 @@ void CaloRootData::Print(Option_t* option) const
     }
 }
 
-void CaloRootData::AddData(Float_t energy)
+void CaloRootData::AddData(Test::HitData* hitData)
 {
-    edep.push_back(energy);
+    Test::CaloHitData* caloHitData = dynamic_cast<Test::CaloHitData*>(hitData);
+    edep.push_back(caloHitData->fEdep);
 }

@@ -1,6 +1,9 @@
 #include "rootdata/SipmRootData.hh"
 #include <iostream>
 
+#include "detectors/HitData.hh"
+#include "detectors/hitdata/SipmHitData.hh"
+
 ClassImp(SipmRootData)
 
 SipmRootData::SipmRootData()
@@ -26,8 +29,9 @@ void SipmRootData::Print(Option_t* option) const
     }
 }
 
-void SipmRootData::AddData(Float_t time)
+void SipmRootData::AddData(Test::HitData* hitData)
 {
+    Test::SipmHitData* sipmHitData = dynamic_cast<Test::SipmHitData*>(hitData);
     nHits++;
-    times.push_back(time);
+    times.push_back(sipmHitData->fTime);
 }

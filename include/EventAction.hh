@@ -1,7 +1,8 @@
 #pragma once
 
 #include <G4UserEventAction.hh>
-#include "globals.hh"
+
+class G4Event;
 
 namespace Test
 {

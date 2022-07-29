@@ -2,6 +2,8 @@
 
 #include <TObject.h>
 
+#include "detectors/HitData.hh"
+
 class SipmRootData : public TObject
 {
 private:
@@ -17,7 +19,7 @@ public:
     virtual void Clear(Option_t* option="");
     virtual void Print(Option_t* option="") const;
 
-    void AddData(Float_t time);
+    void AddData(Test::HitData* hitData);
 
     Int_t GetSipmID() { return sipmID; };
 

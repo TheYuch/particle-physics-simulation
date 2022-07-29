@@ -7,13 +7,16 @@
 
 #include "detectors/HitData.hh"
 
+class G4Step;
+
 namespace Test
 {
 
 class DetectorHit : public G4VHit
 {
 public:
-    DetectorHit();
+    DetectorHit() = delete;
+    DetectorHit(HitData* data);
     ~DetectorHit();
 
     // operators
@@ -24,8 +27,8 @@ public:
     G4bool CheckIDMatch(G4int detectorID, G4int trackID) const;
 
     // functions
-    void UpdateData(HitData* data) { fData->Update(data); }
-    void Print() { fData->Print(); }
+    void UpdateData(G4Step* step) { fData->Update(step); }
+    void Print() { fData->Print(fDetectorID, fTrackID); }
 
     // setters
     void SetDetectorID(G4int detectorID) { fDetectorID = detectorID; }

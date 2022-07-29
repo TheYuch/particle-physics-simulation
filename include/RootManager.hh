@@ -1,7 +1,6 @@
 #pragma once
 
 #include <TString.h>
-#include "globals.hh"
 #include <TClonesArray.h>
 
 #include <G4ThreadLocalSingleton.hh>

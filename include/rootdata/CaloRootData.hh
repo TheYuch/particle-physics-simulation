@@ -3,6 +3,8 @@
 #include <TObject.h>
 // #include <TVector3.h>
 
+#include "detectors/HitData.hh"
+
 class CaloRootData : public TObject
 {
 private:
@@ -17,7 +19,7 @@ public:
     virtual void Clear(Option_t* option="");
     virtual void Print(Option_t* option="") const;
 
-    void AddData(Float_t energy);
+    void AddData(Test::HitData* hitData);
 
     Int_t GetCaloID() { return caloID; };
 

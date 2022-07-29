@@ -5,7 +5,8 @@
 #include <G4OpticalPhoton.hh>
 
 #include "detectors/CaloSD.hh"
-#include "detectors/CaloHit.hh"
+#include "detectors/DetectorHit.hh"
+#include "detectors/hitdata/CaloHitData.hh"
 
 #include "RootManager.hh"
 #include "rootdata/CaloRootData.hh"
@@ -25,7 +26,7 @@ CaloSD::~CaloSD()
 
 void CaloSD::Initialize(G4HCofThisEvent* HCE)
 {
-    fHitsCollection = new CaloHitsCollection(SensitiveDetectorName, collectionName[0]);
+    fHitsCollection = new DetectorHitsCollection(SensitiveDetectorName, collectionName[0]);
 
     static G4int HCID = -1;
     if (HCID < 0) HCID = GetCollectionID(0);
@@ -40,7 +41,7 @@ G4bool CaloSD::ProcessHits(G4Step* step, G4TouchableHistory*)
         return false;
     }
 
-    G4int caloID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
+    G4int detectorID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
     G4int trackID = step->GetTrack()->GetTrackID();
     
     // Get ancestor ID and/or update fParentList
@@ -60,25 +61,25 @@ G4bool CaloSD::ProcessHits(G4Step* step, G4TouchableHistory*)
     // However, the above must be called after fParentList manipulation because a step without energy deposit can still branch off into child particles.
 
 
-    CaloHit* newHit = nullptr;
+    DetectorHit* newHit = nullptr;
     G4int nHits = fHitsCollection->entries();
     for (G4int i = 0; i < nHits; i++)
     {
         auto h = (*fHitsCollection)[i];
-        if (h->CheckIDMatch(caloID, ancestorID)) {
+        if (h->CheckIDMatch(detectorID, ancestorID)) {
             newHit = h;
             break;
         }
     }
     if (!newHit) // existing ancestor hit information not found, must create new one
     {
-        newHit = new CaloHit();
-        newHit->SetCaloID(caloID);
+        newHit = new DetectorHit(new CaloHitData());
+        newHit->SetDetectorID(detectorID);
         newHit->SetTrackID(trackID);
         fHitsCollection->insert(newHit);
     }
     
-    newHit->AddData(edep);
+    newHit->UpdateData(step);
 
     return true;
 }
@@ -92,32 +93,19 @@ void CaloSD::EndOfEvent(G4HCofThisEvent* HCE)
     for (G4int i = 0; i < nHits; i++)
     {
         auto h = (*fHitsCollection)[i];
+        G4int detectorID = h->GetDetectorID();
 
-        data = caloRootDataMap[h->GetCaloID()];
+        data = caloRootDataMap[detectorID];
         if (!data)
         {
             data = RootManager::Instance()->GetNewCaloRootData();
 
-            G4int caloID = h->GetCaloID();
-            data->SetCaloID(caloID);
-            caloRootDataMap[caloID] = data;
+            data->SetCaloID(detectorID);
+            caloRootDataMap[detectorID] = data;
         }
 
-        data->AddData(h->GetEdep());
+        data->AddData(h->GetData());
     }
-
-    /* // Debug dumping
-    if (true) //(G4Threading::G4GetThreadId() == 1)
-    {
-        G4cout << "====Begin of event====" << G4endl;
-        G4int cnt = 0;
-        for (auto iter : fParentList)
-        {
-            if (iter.first == iter.second) cnt++;
-            G4cout << iter.first << " " << iter.second << G4endl;
-        }
-        G4cout << "====End of event====" << " | cnt: " << cnt << G4endl;
-    } */
 
     // Clean up fParentList to be ready for next event
     fParentList.clear();

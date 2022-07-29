@@ -6,11 +6,11 @@ namespace Test
 
 G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator = nullptr;
 
-DetectorHit::DetectorHit()
+DetectorHit::DetectorHit(HitData* data)
 : G4VHit()
 , fDetectorID(-1)
 , fTrackID(-1)
-, fData()
+, fData(data)
 {}
 
 DetectorHit::~DetectorHit()

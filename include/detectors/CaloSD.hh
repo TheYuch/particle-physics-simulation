@@ -1,6 +1,6 @@
 #pragma once
 
-#include "detectors/CaloHit.hh"
+#include "detectors/DetectorHit.hh"
 #include <G4VSensitiveDetector.hh>
 
 #include <map>
@@ -24,7 +24,7 @@ public:
     virtual void EndOfEvent(G4HCofThisEvent* HCE) override;
 
 private:
-    CaloHitsCollection* fHitsCollection;
+    DetectorHitsCollection* fHitsCollection;
 
     std::map<int, int> fParentList;
 };
