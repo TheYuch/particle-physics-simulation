@@ -1,28 +1,23 @@
 #pragma once
 
 #include <TObject.h>
-// #include <TVector3.h>
 
 #include "detectors/hitdata/HitData.hh"
 
-class CaloRootData : public TObject
+class RootData : public TObject
 {
 private:
-    Int_t detectorID;
-
-    std::vector<Float_t> edep;
+    Int_t detectorID; // no 'f' in front because this member is public for root
 
 public:
-    CaloRootData();
-    ~CaloRootData();
+    RootData();
+    ~RootData();
 
     virtual void Clear(Option_t* option="");
     virtual void Print(Option_t* option="") const;
 
-    void AddData(Test::HitData* hitData);
+    virtual void AddData(Test::HitData* hitData) = 0;
 
     Int_t GetDetectorID() const { return detectorID; };
     void SetDetectorID(Int_t id) { detectorID = id; };
-
-    ClassDef(CaloRootData, 1);
 };

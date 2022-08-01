@@ -2,12 +2,12 @@
 
 #include <TObject.h>
 
-#include "detectors/HitData.hh"
+#include "detectors/hitdata/HitData.hh"
 
 class SipmRootData : public TObject
 {
 private:
-    Int_t sipmID;
+    Int_t detectorID;
 
     Int_t nHits;
     std::vector<Float_t> times;
@@ -21,9 +21,8 @@ public:
 
     void AddData(Test::HitData* hitData);
 
-    Int_t GetSipmID() { return sipmID; };
-
-    void SetSipmID(Int_t id) { sipmID = id; };
+    Int_t GetDetectorID() const { return detectorID; };
+    void SetDetectorID(Int_t id) { detectorID = id; };
 
     ClassDef(SipmRootData, 1);
 };

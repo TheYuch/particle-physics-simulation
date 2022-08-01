@@ -100,7 +100,7 @@ void CaloSD::EndOfEvent(G4HCofThisEvent* HCE)
         {
             data = RootManager::Instance()->GetNewCaloRootData();
 
-            data->SetCaloID(detectorID);
+            data->SetDetectorID(detectorID);
             caloRootDataMap[detectorID] = data;
         }
 

@@ -1,4 +1,4 @@
-#include "detectors/HitData.hh"
+#include "detectors/hitdata/HitData.hh"
 #include <G4UnitsTable.hh>
 #include <G4Step.hh>
 

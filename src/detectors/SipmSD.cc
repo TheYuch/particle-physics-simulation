@@ -38,35 +38,11 @@ G4bool SipmSD::ProcessHits(G4Step* step, G4TouchableHistory*)
 {
     G4int detectorID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
     G4int trackID = step->GetTrack()->GetTrackID();
-    
-    G4int ancestorID = fParentList[trackID];
-    if (!ancestorID)
-    {
-        ancestorID = fParentList[step->GetTrack()->GetParentID()];
-        if (!ancestorID)
-        {
-            ancestorID = trackID;
-        }
-        fParentList[trackID] = ancestorID;
-    }
 
-    DetectorHit* newHit = nullptr;
-    G4int nHits = fHitsCollection->entries();
-    for (G4int i = 0; i < nHits; i++)
-    {
-        auto h = (*fHitsCollection)[i];
-        if (h->CheckIDMatch(detectorID, ancestorID)) {
-            newHit = h;
-            break;
-        }
-    }
-    if (!newHit)
-    {
-        newHit = new DetectorHit(new SipmHitData());
-        newHit->SetDetectorID(detectorID);
-        newHit->SetTrackID(trackID);
-        fHitsCollection->insert(newHit);
-    }
+    DetectorHit* newHit = new DetectorHit(new SipmHitData());
+    newHit->SetDetectorID(detectorID);
+    newHit->SetTrackID(trackID);
+    fHitsCollection->insert(newHit);
 
     if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition())
     {
@@ -99,14 +75,12 @@ void SipmSD::EndOfEvent(G4HCofThisEvent* HCE)
         {
             data = RootManager::Instance()->GetNewSipmRootData();
 
-            data->SetSipmID(detectorID);
+            data->SetDetectorID(detectorID);
             sipmRootDataMap[detectorID] = data;
         }
 
         data->AddData(h->GetData());
     }
-
-    fParentList.clear();
 }
 
 }

@@ -3,8 +3,6 @@
 #include "detectors/DetectorHit.hh"
 #include <G4VSensitiveDetector.hh>
 
-#include <map>
-
 class G4Step;
 class G4HCofThisEvent;
 class G4String;
@@ -25,8 +23,6 @@ public:
 
 private:
     DetectorHitsCollection* fHitsCollection;
-
-    std::map<int, int> fParentList;
 };
 
 }

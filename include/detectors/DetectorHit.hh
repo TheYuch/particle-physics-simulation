@@ -5,7 +5,7 @@
 #include <G4Allocator.hh>
 #include <G4ThreeVector.hh>
 
-#include "detectors/HitData.hh"
+#include "detectors/hitdata/HitData.hh"
 
 class G4Step;
 

@@ -1,14 +1,14 @@
 #include "rootdata/CaloRootData.hh"
 #include <iostream>
 
-#include "detectors/HitData.hh"
+#include "detectors/hitdata/HitData.hh"
 #include "detectors/hitdata/CaloHitData.hh"
 
 ClassImp(CaloRootData)
 
 CaloRootData::CaloRootData()
 : TObject()
-, caloID(0)
+, detectorID(0)
 {}
 
 CaloRootData::~CaloRootData()
@@ -21,7 +21,7 @@ void CaloRootData::Clear(Option_t* option)
 
 void CaloRootData::Print(Option_t* option) const
 {
-    std::cout << "Calo: " << caloID << std::endl;
+    std::cout << "Calo: " << detectorID << std::endl;
     for (size_t i = 0; i < edep.size(); i++) {
         std::cout << " > edep: " << edep.at(i) << std::endl;
     }

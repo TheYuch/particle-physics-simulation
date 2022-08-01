@@ -5,8 +5,6 @@
 #include <G4StepPoint.hh>
 #include <G4VProcess.hh>
 
-// #include "detectors/CaloSD.hh"
-
 namespace Test
 {
 

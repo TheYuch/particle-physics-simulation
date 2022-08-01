@@ -1,14 +1,14 @@
 #include "rootdata/SipmRootData.hh"
 #include <iostream>
 
-#include "detectors/HitData.hh"
+#include "detectors/hitdata/HitData.hh"
 #include "detectors/hitdata/SipmHitData.hh"
 
 ClassImp(SipmRootData)
 
 SipmRootData::SipmRootData()
 : TObject()
-, sipmID(0)
+, detectorID(0)
 , nHits(0)
 {}
 
@@ -23,7 +23,7 @@ void SipmRootData::Clear(Option_t* option)
 
 void SipmRootData::Print(Option_t* option) const
 {
-    std::cout << "Sipm: " << sipmID << ", number of hits: " << nHits << std::endl;
+    std::cout << "Sipm: " << detectorID << ", number of hits: " << nHits << std::endl;
     for (size_t i = 0; i < times.size(); i++) {
         std::cout << " > time: " << times.at(i) << std::endl;
     }
