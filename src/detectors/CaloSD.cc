@@ -8,6 +8,7 @@
 #include "detectors/DetectorHit.hh"
 #include "detectors/hitdata/CaloHitData.hh"
 
+#include "Constants.hh"
 #include "RootManager.hh"
 #include "rootdata/CaloRootData.hh"
 
@@ -98,7 +99,7 @@ void CaloSD::EndOfEvent(G4HCofThisEvent* HCE)
         data = caloRootDataMap[detectorID];
         if (!data)
         {
-            data = RootManager::Instance()->GetNewCaloRootData();
+            data = (CaloRootData*)RootManager::Instance()->GetNewRootData(Constants::RootDataTypes::Calo);
 
             data->SetDetectorID(detectorID);
             caloRootDataMap[detectorID] = data;

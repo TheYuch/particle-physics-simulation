@@ -1,7 +1,6 @@
 #include "rootdata/CaloRootData.hh"
 #include <iostream>
 
-#include "detectors/hitdata/HitData.hh"
 #include "detectors/hitdata/CaloHitData.hh"
 
 ClassImp(CaloRootData)

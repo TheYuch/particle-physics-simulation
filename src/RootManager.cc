@@ -9,11 +9,8 @@
 #pragma clang diagnostic pop
 #endif
 
-#include "RootManager.hh"
 #include "Constants.hh"
-
-#include "rootdata/CaloRootData.hh"
-#include "rootdata/SipmRootData.hh"
+#include "RootManager.hh"
 
 #include <G4Run.hh>
 #include <G4RunManager.hh>
@@ -30,7 +27,7 @@ RootManager::RootManager()
 : fIsOpen(false)
 , fTheFile(nullptr)
 , fTheTree(nullptr)
-, fFileName(Constants::kDefaultFileName)
+, fFileName(Constants::DefaultFileName)
 {
     if (G4Threading::G4GetThreadId() != -1) {
         // This instance is created in a worker thread
@@ -38,8 +35,9 @@ RootManager::RootManager()
         InitializeFromGlobal();
     }
 
-    fCaloVec = new TClonesArray("CaloRootData", 5);
-    fSipmVec = new TClonesArray("SipmRootData", 10);
+    // TODO: do this step with a data file (like JSON or GDML)
+    fDetectorVecs[Constants::RootDataTypes::Calo] = new TClonesArray("CaloRootData", 5);
+    fDetectorVecs[Constants::RootDataTypes::Sipm] = new TClonesArray("SipmRootData", 10);
 }
 
 RootManager::~RootManager()
@@ -48,10 +46,12 @@ RootManager::~RootManager()
         WriteAndClose();
     }
     
-    fCaloVec->Delete();
-    fSipmVec->Delete();
-    delete fCaloVec;
-    delete fSipmVec;
+    for (auto const& detectorVecPair : fDetectorVecs)
+    {
+        detectorVecPair.second->Delete();
+        delete detectorVecPair.second;
+    }
+    fDetectorVecs.clear();
 }
 
 RootManager* RootManager::fTheGlobalInstance = nullptr;
@@ -90,7 +90,7 @@ bool RootManager::Open()
     }
     if (fFileName == "")
     {
-        fFileName = Constants::kDefaultFileName;
+        fFileName = Constants::DefaultFileName;
         G4cerr << "No file name given for ROOT ouput. Initializing it to defalut: " << fFileName << G4endl;
     }
 
@@ -126,8 +126,10 @@ bool RootManager::Open()
 
     // With the file open, start generating objects
     fTheTree = new TTree("sim", "sim");
-    fTheTree->Branch("calo", "TClonesArray", &fCaloVec, 32000, 99);
-    fTheTree->Branch("sipm", "TClonesArray", &fSipmVec, 32000, 99);
+    for (auto const& detectorVecPair : fDetectorVecs)
+    {
+        fTheTree->Branch(Constants::RootDataTypeNames[(int)detectorVecPair.first], "TClonesArray", detectorVecPair.second, 32000, 99);
+    }
     
 
     // Return
@@ -144,8 +146,10 @@ Int_t RootManager::Fill()
         G4cerr << "Warning: Could not fill TTree as either the file or the tree is unavailable" << G4endl;
     }
 
-    fCaloVec->Clear("C");
-    fSipmVec->Clear("C");
+    for (auto const& detectorVecPair : fDetectorVecs)
+    {
+        detectorVecPair.second->Clear("C"); // TODO: keep track of which ones need "C" - or is this unnecessary?
+    }
     
     return nBytes;
 }
@@ -177,16 +181,10 @@ bool RootManager::WriteAndClose()
     return true;
 }
 
-CaloRootData* RootManager::GetNewCaloRootData()
+TObject* RootManager::GetNewRootData(Constants::RootDataTypes rootDataType)
 {
-    CaloRootData* ret = (CaloRootData*)fCaloVec->ConstructedAt(fCaloVec->GetEntries()); // fCaloVec->GetEntries() is index of element past the last one, which the function gets, maybe allocates, and returns
-    return ret;
-}
-
-SipmRootData* RootManager::GetNewSipmRootData()
-{
-    SipmRootData* ret = (SipmRootData*)fSipmVec->ConstructedAt(fSipmVec->GetEntries());
-    return ret;
+    TClonesArray* detectorVec = fDetectorVecs[rootDataType];
+    return detectorVec->ConstructedAt(detectorVec->GetEntries()); // for example, fCaloVec->GetEntries() is index of element past the last one, which the function gets, maybe allocates, and returns
 }
 
 }

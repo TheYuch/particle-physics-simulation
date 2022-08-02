@@ -1,7 +1,6 @@
 #include "rootdata/SipmRootData.hh"
 #include <iostream>
 
-#include "detectors/hitdata/HitData.hh"
 #include "detectors/hitdata/SipmHitData.hh"
 
 ClassImp(SipmRootData)

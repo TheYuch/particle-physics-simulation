@@ -5,11 +5,12 @@
 
 #include <G4ThreadLocalSingleton.hh>
 
+#include "Constants.hh"
+#include <map>
+
 class TFile;
 class TTree;
-
-class CaloRootData;
-class SipmRootData;
+class TObject;
 
 namespace Test
 {
@@ -29,8 +30,7 @@ public:
     // getters
     TString GetFileName() { return fFileName; };
     
-    CaloRootData* GetNewCaloRootData();
-    SipmRootData* GetNewSipmRootData();
+    TObject* GetNewRootData(Constants::RootDataTypes rootDataType);
 
     // setters
     void SetFileName(TString newName) { if (!fIsOpen) fFileName = newName; };
@@ -50,8 +50,7 @@ private:
     TString fFileName;
 
     // data fields
-    TClonesArray* fCaloVec;
-    TClonesArray* fSipmVec;
+    std::map<Constants::RootDataTypes, TClonesArray*> fDetectorVecs;
 };
 
 }

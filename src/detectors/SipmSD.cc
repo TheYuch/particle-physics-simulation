@@ -73,7 +73,7 @@ void SipmSD::EndOfEvent(G4HCofThisEvent* HCE)
         data = sipmRootDataMap[detectorID];
         if (!data)
         {
-            data = RootManager::Instance()->GetNewSipmRootData();
+            data = (SipmRootData*)RootManager::Instance()->GetNewRootData(Constants::RootDataTypes::Sipm);
 
             data->SetDetectorID(detectorID);
             sipmRootDataMap[detectorID] = data;

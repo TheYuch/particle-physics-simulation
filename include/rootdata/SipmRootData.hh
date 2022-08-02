@@ -1,8 +1,12 @@
 #pragma once
 
 #include <TObject.h>
+//#include "rootdata/RootData.hh"
 
-#include "detectors/hitdata/HitData.hh"
+namespace Test
+{
+    class HitData;
+}
 
 class SipmRootData : public TObject
 {
@@ -16,8 +20,8 @@ public:
     SipmRootData();
     ~SipmRootData();
 
-    virtual void Clear(Option_t* option="");
-    virtual void Print(Option_t* option="") const;
+    virtual void Clear(Option_t* option="") override;
+    virtual void Print(Option_t* option="") const override;
 
     void AddData(Test::HitData* hitData);
 
