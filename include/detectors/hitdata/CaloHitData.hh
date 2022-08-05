@@ -9,7 +9,7 @@ namespace Test
 
 class CaloHitData : public HitData
 {
-friend class ::CaloRootData; // TODO: tmp - declare an abstract RootData class as a friend in the base HitData class
+friend class ::CaloRootData;
 public:
     CaloHitData() // note: if there is a relevant base class constructor with parameters, then call it here
     : fEdep(0)

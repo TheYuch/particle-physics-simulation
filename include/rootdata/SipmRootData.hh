@@ -1,7 +1,6 @@
 #pragma once
 
 #include <TObject.h>
-//#include "rootdata/RootData.hh"
 
 namespace Test
 {

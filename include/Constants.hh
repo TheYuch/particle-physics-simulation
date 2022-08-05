@@ -1,10 +1,11 @@
 #pragma once
 
 #include <TString.h>
+#include <map>
 
 namespace Constants {
    const TString DefaultFileName = "sim#RUN#";
 
-   enum class RootDataTypes {Calo, Sipm};
-   static const char* RootDataTypeNames[2] = {"Calo", "Sipm"}; // TODO: keep this in sync with enum class RootDataTypes
+   enum class RootDataType {Calo, Sipm};
+   const std::map<RootDataType, TString> RootDataTypeNames = {{RootDataType::Calo, "Calo"}, {RootDataType::Sipm, "Sipm"}}; // TODO: keep this in sync with enum class RootDataType
 }

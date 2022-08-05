@@ -12,7 +12,6 @@ class SipmHitData : public HitData
 friend class ::SipmRootData;
 public:
     SipmHitData()
-    : fTime(0)
     {}
 
     ~SipmHitData()
@@ -21,7 +20,7 @@ public:
     const HitData& operator=(const HitData& other)
     {
         const SipmHitData* otherData = dynamic_cast<const SipmHitData*>(&other);
-        fTime = otherData->fTime;
+        fTimes = otherData->fTimes;
         
         return *this;
     }
@@ -29,7 +28,7 @@ public:
     void Update(G4Step* step)
     {
         G4double time = step->GetPostStepPoint()->GetGlobalTime();
-        fTime = time;
+        fTimes.push_back(time);
     }
 
     void Print(G4int detectorID, G4int trackID)
@@ -38,12 +37,12 @@ public:
             << "SiPM..." << G4endl
             << "    Detector ID: " << detectorID << G4endl
             << "    Track ID: " << trackID << G4endl
-            << "    Time: " << G4BestUnit(fTime, "Time")
+            << "    Number of optical hits: " << fTimes.size()
             << G4endl;
     }
 
 private:
-    G4double fTime;
+    std::vector<G4double> fTimes;
 };
 
 }

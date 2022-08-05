@@ -31,6 +31,11 @@ void SipmRootData::Print(Option_t* option) const
 void SipmRootData::AddData(Test::HitData* hitData)
 {
     Test::SipmHitData* sipmHitData = dynamic_cast<Test::SipmHitData*>(hitData);
-    nHits++;
-    times.push_back(sipmHitData->fTime);
+
+    int size = sipmHitData->fTimes.size();
+    nHits += size;
+    for (int i = 0; i < size; i++)
+    {
+        times.push_back(sipmHitData->fTimes[i]);
+    }
 }

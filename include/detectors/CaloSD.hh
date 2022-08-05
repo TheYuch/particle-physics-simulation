@@ -26,7 +26,7 @@ public:
 private:
     DetectorHitsCollection* fHitsCollection;
 
-    std::map<int, int> fParentList;
+    std::map<int, int> fAncestorMap;
 };
 
 }

@@ -8,7 +8,6 @@
 #include "detectors/DetectorHit.hh"
 #include "detectors/hitdata/CaloHitData.hh"
 
-#include "Constants.hh"
 #include "RootManager.hh"
 #include "rootdata/CaloRootData.hh"
 
@@ -19,7 +18,7 @@ CaloSD::CaloSD(G4String name)
 : G4VSensitiveDetector(name)
 , fHitsCollection(nullptr)
 {
-    collectionName.insert("CaloHitsCollection");
+    collectionName.insert(name + "HitsCollection");
 }
 
 CaloSD::~CaloSD()
@@ -45,21 +44,21 @@ G4bool CaloSD::ProcessHits(G4Step* step, G4TouchableHistory*)
     G4int detectorID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
     G4int trackID = step->GetTrack()->GetTrackID();
     
-    // Get ancestor ID and/or update fParentList
-    G4int ancestorID = fParentList[trackID];
+    // Get ancestor ID and/or update fAncestorMap
+    G4int ancestorID = fAncestorMap[trackID];
     if (!ancestorID)
     {
-        ancestorID = fParentList[step->GetTrack()->GetParentID()]; // trace back up the tree, valid with the Geant4 branching execution order
+        ancestorID = fAncestorMap[step->GetTrack()->GetParentID()]; // trace back up the tree, valid with the Geant4 branching execution order
         if (!ancestorID) // the ancestor does not have an ancestor
         {
             ancestorID = trackID;
         }
-        fParentList[trackID] = ancestorID;
+        fAncestorMap[trackID] = ancestorID;
     }
 
     G4double edep = step->GetTotalEnergyDeposit();
     if (edep <= 0.) return false; // want interesting steps with positive energy deposit.
-    // However, the above must be called after fParentList manipulation because a step without energy deposit can still branch off into child particles.
+    // However, the above must be called after fAncestorMap manipulation because a step without energy deposit can still branch off into child particles.
 
 
     DetectorHit* newHit = nullptr;
@@ -67,7 +66,8 @@ G4bool CaloSD::ProcessHits(G4Step* step, G4TouchableHistory*)
     for (G4int i = 0; i < nHits; i++)
     {
         auto h = (*fHitsCollection)[i];
-        if (h->CheckIDMatch(detectorID, ancestorID)) {
+        if (h->CheckIDMatch(detectorID, ancestorID))
+        {
             newHit = h;
             break;
         }
@@ -76,7 +76,7 @@ G4bool CaloSD::ProcessHits(G4Step* step, G4TouchableHistory*)
     {
         newHit = new DetectorHit(new CaloHitData());
         newHit->SetDetectorID(detectorID);
-        newHit->SetTrackID(trackID);
+        newHit->SetTrackID(ancestorID);
         fHitsCollection->insert(newHit);
     }
     
@@ -99,7 +99,7 @@ void CaloSD::EndOfEvent(G4HCofThisEvent* HCE)
         data = caloRootDataMap[detectorID];
         if (!data)
         {
-            data = (CaloRootData*)RootManager::Instance()->GetNewRootData(Constants::RootDataTypes::Calo);
+            data = (CaloRootData*)RootManager::Instance()->GetNewRootData(Constants::RootDataType::Calo);
 
             data->SetDetectorID(detectorID);
             caloRootDataMap[detectorID] = data;
@@ -108,8 +108,8 @@ void CaloSD::EndOfEvent(G4HCofThisEvent* HCE)
         data->AddData(h->GetData());
     }
 
-    // Clean up fParentList to be ready for next event
-    fParentList.clear();
+    // Clean up
+    fAncestorMap.clear();
 }
 
 }

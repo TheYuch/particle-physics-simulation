@@ -9,7 +9,6 @@
 #pragma clang diagnostic pop
 #endif
 
-#include "Constants.hh"
 #include "RootManager.hh"
 
 #include <G4Run.hh>
@@ -36,8 +35,8 @@ RootManager::RootManager()
     }
 
     // TODO: do this step with a data file (like JSON or GDML)
-    fDetectorVecs[Constants::RootDataTypes::Calo] = new TClonesArray("CaloRootData", 5);
-    fDetectorVecs[Constants::RootDataTypes::Sipm] = new TClonesArray("SipmRootData", 10);
+    fRootDataVecs[Constants::RootDataType::Calo] = new TClonesArray("CaloRootData", 5);
+    fRootDataVecs[Constants::RootDataType::Sipm] = new TClonesArray("SipmRootData", 10);
 }
 
 RootManager::~RootManager()
@@ -46,12 +45,11 @@ RootManager::~RootManager()
         WriteAndClose();
     }
     
-    for (auto const& detectorVecPair : fDetectorVecs)
+    for (auto const& rootDataVecPair : fRootDataVecs)
     {
-        detectorVecPair.second->Delete();
-        delete detectorVecPair.second;
+        rootDataVecPair.second->Delete();
+        delete rootDataVecPair.second;
     }
-    fDetectorVecs.clear();
 }
 
 RootManager* RootManager::fTheGlobalInstance = nullptr;
@@ -126,9 +124,9 @@ bool RootManager::Open()
 
     // With the file open, start generating objects
     fTheTree = new TTree("sim", "sim");
-    for (auto const& detectorVecPair : fDetectorVecs)
+    for (auto const& rootDataVecPair : fRootDataVecs)
     {
-        fTheTree->Branch(Constants::RootDataTypeNames[(int)detectorVecPair.first], "TClonesArray", detectorVecPair.second, 32000, 99);
+        fTheTree->Branch(Constants::RootDataTypeNames.at(rootDataVecPair.first), "TClonesArray", rootDataVecPair.second, 32000, 99);
     }
     
 
@@ -146,9 +144,9 @@ Int_t RootManager::Fill()
         G4cerr << "Warning: Could not fill TTree as either the file or the tree is unavailable" << G4endl;
     }
 
-    for (auto const& detectorVecPair : fDetectorVecs)
+    for (auto const& rootDataVecPair : fRootDataVecs)
     {
-        detectorVecPair.second->Clear("C"); // TODO: keep track of which ones need "C" - or is this unnecessary?
+        rootDataVecPair.second->Clear("C");
     }
     
     return nBytes;
@@ -181,10 +179,10 @@ bool RootManager::WriteAndClose()
     return true;
 }
 
-TObject* RootManager::GetNewRootData(Constants::RootDataTypes rootDataType)
+TObject* RootManager::GetNewRootData(Constants::RootDataType rootDataType)
 {
-    TClonesArray* detectorVec = fDetectorVecs[rootDataType];
-    return detectorVec->ConstructedAt(detectorVec->GetEntries()); // for example, fCaloVec->GetEntries() is index of element past the last one, which the function gets, maybe allocates, and returns
+    TClonesArray* rootDataVec = fRootDataVecs[rootDataType];
+    return rootDataVec->ConstructedAt(rootDataVec->GetEntries()); // for example, fCaloVec->GetEntries() is index of element past the last one, which the function gets, maybe allocates, and returns
 }
 
 }

@@ -30,7 +30,7 @@ public:
     // getters
     TString GetFileName() { return fFileName; };
     
-    TObject* GetNewRootData(Constants::RootDataTypes rootDataType);
+    TObject* GetNewRootData(Constants::RootDataType rootDataType);
 
     // setters
     void SetFileName(TString newName) { if (!fIsOpen) fFileName = newName; };
@@ -50,7 +50,7 @@ private:
     TString fFileName;
 
     // data fields
-    std::map<Constants::RootDataTypes, TClonesArray*> fDetectorVecs;
+    std::map<Constants::RootDataType, TClonesArray*> fRootDataVecs;
 };
 
 }
