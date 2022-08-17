@@ -1,6 +1,10 @@
+#pragma once
+
 #include "detectors/hitdata/HitData.hh"
-#include <G4UnitsTable.hh>
-#include <G4Step.hh>
+
+#include "detectors/DetectorHit.hh"
+
+class G4Step;
 
 class CaloRootData;
 
@@ -11,38 +15,18 @@ class CaloHitData : public HitData
 {
 friend class ::CaloRootData;
 public:
-    CaloHitData() // note: if there is a relevant base class constructor with parameters, then call it here
-    : fEdep(0)
-    {}
+    CaloHitData() = delete;
+    CaloHitData(G4Step* step);
+    ~CaloHitData();
 
-    ~CaloHitData()
-    {}
+    virtual void Print() override;
 
-    const HitData& operator=(const HitData& other)
-    {
-        const CaloHitData* otherData = dynamic_cast<const CaloHitData*>(&other);
-        fEdep = otherData->fEdep;
-        
-        return *this;
-    }
-
-    void Update(G4Step* step)
-    {
-        G4double edep = step->GetTotalEnergyDeposit();
-        fEdep += edep;
-    }
-
-    void Print(G4int detectorID, G4int trackID)
-    {
-        G4cout
-            << "CALORIMETER..." << G4endl
-            << "    Detector ID: " << detectorID << G4endl
-            << "    Track ID: " << trackID << G4endl
-            << "    Energy Deposit: " << G4BestUnit(fEdep, "Energy")
-            << G4endl;
-    }
+    static G4bool IgnoreStep(G4Step* step);
+    static void ConvertToRootData(DetectorHitsCollection* hitsCollection);
 
 private:
+    G4int fTrackID;
+    G4int fParentID;
     G4double fEdep;
 };
 

@@ -1,15 +1,11 @@
-#include <G4HCofThisEvent.hh>
-#include <G4Step.hh>
-#include <G4String.hh>
-#include <G4TouchableHistory.hh>
-#include <G4OpticalPhoton.hh>
-
 #include "detectors/CaloSD.hh"
+
+#include <G4HCofThisEvent.hh>
+
 #include "detectors/DetectorHit.hh"
 #include "detectors/hitdata/CaloHitData.hh"
 
-#include "RootManager.hh"
-#include "rootdata/CaloRootData.hh"
+class CaloRootData;
 
 namespace Test
 {
@@ -36,80 +32,16 @@ void CaloSD::Initialize(G4HCofThisEvent* HCE)
 
 G4bool CaloSD::ProcessHits(G4Step* step, G4TouchableHistory*)
 {
-    if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
-        // Don't care about optical photons here. They will be detected by SiPMs
-        return false;
-    }
+    if (CaloHitData::IgnoreStep(step)) return false;
 
-    G4int detectorID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
-    G4int trackID = step->GetTrack()->GetTrackID();
-    
-    // Get ancestor ID and/or update fAncestorMap
-    G4int ancestorID = fAncestorMap[trackID];
-    if (!ancestorID)
-    {
-        ancestorID = fAncestorMap[step->GetTrack()->GetParentID()]; // trace back up the tree, valid with the Geant4 branching execution order
-        if (!ancestorID) // the ancestor does not have an ancestor
-        {
-            ancestorID = trackID;
-        }
-        fAncestorMap[trackID] = ancestorID;
-    }
-
-    G4double edep = step->GetTotalEnergyDeposit();
-    if (edep <= 0.) return false; // want interesting steps with positive energy deposit.
-    // However, the above must be called after fAncestorMap manipulation because a step without energy deposit can still branch off into child particles.
-
-
-    DetectorHit* newHit = nullptr;
-    G4int nHits = fHitsCollection->entries();
-    for (G4int i = 0; i < nHits; i++)
-    {
-        auto h = (*fHitsCollection)[i];
-        if (h->CheckIDMatch(detectorID, ancestorID))
-        {
-            newHit = h;
-            break;
-        }
-    }
-    if (!newHit) // existing ancestor hit information not found, must create new one
-    {
-        newHit = new DetectorHit(new CaloHitData());
-        newHit->SetDetectorID(detectorID);
-        newHit->SetTrackID(ancestorID);
-        fHitsCollection->insert(newHit);
-    }
-    
-    newHit->UpdateData(step);
-
+    DetectorHit* newHit = new DetectorHit(new CaloHitData(step));
+    fHitsCollection->insert(newHit);
     return true;
 }
 
-void CaloSD::EndOfEvent(G4HCofThisEvent* HCE)
+void CaloSD::EndOfEvent(G4HCofThisEvent*)
 {
-    std::map<int, CaloRootData*> caloRootDataMap;
-
-    CaloRootData* data = nullptr;
-    G4int nHits = fHitsCollection->entries();
-    for (G4int i = 0; i < nHits; i++)
-    {
-        auto h = (*fHitsCollection)[i];
-        G4int detectorID = h->GetDetectorID();
-
-        data = caloRootDataMap[detectorID];
-        if (!data)
-        {
-            data = (CaloRootData*)RootManager::Instance()->GetNewRootData(Constants::RootDataType::Calo);
-
-            data->SetDetectorID(detectorID);
-            caloRootDataMap[detectorID] = data;
-        }
-
-        data->AddData(h->GetData());
-    }
-
-    // Clean up
-    fAncestorMap.clear();
+    CaloHitData::ConvertToRootData(fHitsCollection);
 }
 
 }

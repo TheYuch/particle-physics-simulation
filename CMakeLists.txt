@@ -40,7 +40,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 #
-file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/src/detectors/*.cc)# ${PROJECT_SOURCE_DIR}/src/detectors/hitdata/*.cc)
+file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/src/detectors/*.cc ${PROJECT_SOURCE_DIR}/src/detectors/hitdata/*.cc)
 file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/hitdata/*.hh)
 
 file(GLOB ROOT_DATA_SOURCES ${PROJECT_SOURCE_DIR}/src/rootdata/*.cc)

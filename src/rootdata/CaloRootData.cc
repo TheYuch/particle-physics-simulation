@@ -1,7 +1,8 @@
 #include "rootdata/CaloRootData.hh"
-#include <iostream>
 
 #include "detectors/hitdata/CaloHitData.hh"
+
+#include <iostream>
 
 ClassImp(CaloRootData)
 
@@ -13,21 +14,32 @@ CaloRootData::CaloRootData()
 CaloRootData::~CaloRootData()
 {}
 
+void CaloRootData::Initialize(Int_t id)
+{
+    detectorID = id;
+}
+
+void CaloRootData::Update(Test::CaloHitData* caloHitData, Int_t ancestorID)
+{
+    totalEdep += caloHitData->fEdep;
+    showerEdeps[ancestorID] += caloHitData->fEdep;
+}
+
 void CaloRootData::Clear(Option_t* option)
 {
-    edep.clear();
+    totalEdep = 0;
+    showerEdeps.clear();
 }
 
 void CaloRootData::Print(Option_t* option) const
 {
-    std::cout << "Calo: " << detectorID << std::endl;
-    for (size_t i = 0; i < edep.size(); i++) {
-        std::cout << " > edep: " << edep.at(i) << std::endl;
+    std::cout
+        << "Calorimeter Root Data:" << std::endl
+        << "\tDetector ID: " << detectorID << std::endl
+        << "\tTotal Edep: " << totalEdep << std::endl
+        << "\tShower Edeps:" << std::endl;
+    for (auto const& showerEdepPair : showerEdeps)
+    {
+        std::cout << "\t\tAncestor Track ID: " << showerEdepPair.first << ", Edep: " << showerEdepPair.second << std::endl;
     }
-}
-
-void CaloRootData::AddData(Test::HitData* hitData)
-{
-    Test::CaloHitData* caloHitData = dynamic_cast<Test::CaloHitData*>(hitData);
-    edep.push_back(caloHitData->fEdep);
 }

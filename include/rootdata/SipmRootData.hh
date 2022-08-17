@@ -4,7 +4,7 @@
 
 namespace Test
 {
-    class HitData;
+    class SipmHitData;
 }
 
 class SipmRootData : public TObject
@@ -14,18 +14,18 @@ private:
 
     Int_t nHits;
     std::vector<Float_t> times;
+    
+    Float_t totalEdep; // total energy deposit of particles that are not optical photons
 
 public:
     SipmRootData();
     ~SipmRootData();
 
+    void Initialize(Int_t id);
+    void Update(Test::SipmHitData* sipmHitData);
+
     virtual void Clear(Option_t* option="") override;
-    virtual void Print(Option_t* option="") const override;
-
-    void AddData(Test::HitData* hitData);
-
-    Int_t GetDetectorID() const { return detectorID; };
-    void SetDetectorID(Int_t id) { detectorID = id; };
+    virtual void Print(Option_t* option="") const override;    
 
     ClassDef(SipmRootData, 1);
 };

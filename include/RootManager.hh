@@ -6,7 +6,6 @@
 #include <G4ThreadLocalSingleton.hh>
 
 #include "Constants.hh"
-#include <map>
 
 class TFile;
 class TTree;

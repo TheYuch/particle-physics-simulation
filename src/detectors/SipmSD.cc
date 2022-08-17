@@ -1,15 +1,11 @@
-#include <G4HCofThisEvent.hh>
-#include <G4Step.hh>
-#include <G4String.hh>
-#include <G4TouchableHistory.hh>
-#include <G4OpticalPhoton.hh>
-
 #include "detectors/SipmSD.hh"
+
+#include <G4HCofThisEvent.hh>
+
 #include "detectors/DetectorHit.hh"
 #include "detectors/hitdata/SipmHitData.hh"
 
-#include "RootManager.hh"
-#include "rootdata/SipmRootData.hh"
+class SipmRootData;
 
 namespace Test
 {
@@ -21,7 +17,7 @@ SipmSD::SipmSD(G4String name)
     collectionName.insert(name + "HitsCollection");
 }
 
-SipmSD::~SipmSD() // note: fDetectorMap pointers do not have to be deleted as they are owned by fHitsCollection, which is deconstructed elsewhere
+SipmSD::~SipmSD()
 {}
 
 void SipmSD::Initialize(G4HCofThisEvent* HCE)
@@ -36,48 +32,16 @@ void SipmSD::Initialize(G4HCofThisEvent* HCE)
 
 G4bool SipmSD::ProcessHits(G4Step* step, G4TouchableHistory*)
 {
-    if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition())
-    {
-        // initialize new hit
-        G4int detectorID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
-
-        DetectorHit* newHit = fDetectorMap[detectorID];
-
-        if (!newHit)
-        {
-            newHit = new DetectorHit(new SipmHitData());
-            newHit->SetDetectorID(detectorID);
-
-            fHitsCollection->insert(newHit);
-            fDetectorMap[detectorID] = newHit;
-        }
+    if (SipmHitData::IgnoreStep(step)) return false;
         
-        newHit->UpdateData(step);
-
-        // kill the photon that hits
-        step->GetTrack()->SetTrackStatus(fKillTrackAndSecondaries);
-
-        return true;
-    }
-    
-    // TODO: what if the track is not an optical photon?
-    
-    return false;
+    DetectorHit* newHit = new DetectorHit(new SipmHitData(step));
+    fHitsCollection->insert(newHit);
+    return true;
 }
 
-void SipmSD::EndOfEvent(G4HCofThisEvent* HCE)
+void SipmSD::EndOfEvent(G4HCofThisEvent*)
 {
-    G4int nHits = fHitsCollection->entries();
-    for (G4int i = 0; i < nHits; i++)
-    {
-        auto h = (*fHitsCollection)[i];
-
-        SipmRootData* data = (SipmRootData*)RootManager::Instance()->GetNewRootData(Constants::RootDataType::Sipm);
-        data->SetDetectorID(h->GetDetectorID());
-        data->AddData(h->GetData());
-    }
-
-    fDetectorMap.clear();
+    SipmHitData::ConvertToRootData(fHitsCollection);
 }
 
 }

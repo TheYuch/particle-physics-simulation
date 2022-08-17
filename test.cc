@@ -36,7 +36,7 @@ int main(int argc,char** argv)
   // Detector construction
   runManager->SetUserInitialization(new DetectorConstruction());
 
-  // TODO: make physics list class, use monte carlo example and example b3a  TODO TODO TODO
+  // TODO: make physics list class, use monte carlo example and example b3a
   // Physics list
   G4VModularPhysicsList* physicsList = new FTFP_BERT(0); // 0 is for verbose level
   physicsList->RegisterPhysics(new G4OpticalPhysics()); // for optical photons

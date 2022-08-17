@@ -1,8 +1,7 @@
 #pragma once
 
+#include <G4Step.hh>
 #include <G4Types.hh>
-
-class G4Step;
 
 namespace Test
 {
@@ -10,12 +9,17 @@ namespace Test
 class HitData
 {
 public:
-    HitData() {}
+    HitData() = delete;
+    HitData(G4Step* step)
+    {
+        fDetectorID = step->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
+    }
     virtual ~HitData() = default;
 
-    virtual const HitData& operator=(const HitData& other) = 0;
-    virtual void Update(G4Step* step) = 0;
-    virtual void Print(G4int detectorID, G4int trackID) = 0;
+    virtual void Print() = 0;
+
+protected:
+    G4int fDetectorID;
 };
 
 }

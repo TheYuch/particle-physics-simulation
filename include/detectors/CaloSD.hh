@@ -1,9 +1,8 @@
 #pragma once
 
-#include "detectors/DetectorHit.hh"
 #include <G4VSensitiveDetector.hh>
 
-#include <map>
+#include "detectors/DetectorHit.hh"
 
 class G4Step;
 class G4HCofThisEvent;
@@ -19,14 +18,12 @@ public:
     CaloSD(G4String name);
     ~CaloSD();
 
-    virtual void Initialize(G4HCofThisEvent* HCE) override;
-    virtual G4bool ProcessHits(G4Step* step, G4TouchableHistory* history) override;
-    virtual void EndOfEvent(G4HCofThisEvent* HCE) override;
+    virtual void Initialize(G4HCofThisEvent*) override;
+    virtual G4bool ProcessHits(G4Step*, G4TouchableHistory*) override;
+    virtual void EndOfEvent(G4HCofThisEvent*) override;
 
 private:
     DetectorHitsCollection* fHitsCollection;
-
-    std::map<int, int> fAncestorMap;
 };
 
 }

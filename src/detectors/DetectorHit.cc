@@ -1,35 +1,8 @@
 #include "detectors/DetectorHit.hh"
-#include <G4UnitsTable.hh>
 
-namespace Test
+namespace Test // TODO: make this into ONE .hh class! check if G4ThreadLocal extern part works though.
 {
 
 G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator = nullptr;
-
-DetectorHit::DetectorHit(HitData* data)
-: G4VHit()
-, fDetectorID(-1)
-, fTrackID(-1)
-, fData(data)
-{}
-
-DetectorHit::~DetectorHit()
-{
-    delete fData;
-}
-
-const DetectorHit& DetectorHit::operator=(const DetectorHit& other)
-{
-    fDetectorID = other.fDetectorID;
-    fTrackID = other.fTrackID;
-    fData = other.fData;
-
-    return *this;
-}
-
-G4bool DetectorHit::CheckIDMatch(G4int detectorID, G4int trackID) const
-{
-    return (detectorID == fDetectorID) && (trackID == fTrackID);
-}
 
 }
