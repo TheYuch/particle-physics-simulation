@@ -5,7 +5,7 @@
 #include <G4UnitsTable.hh>
 
 #include <map>
-#include "RootManager.hh"
+#include "utils/RootManager.hh"
 #include "rootdata/SipmRootData.hh"
 
 namespace Test

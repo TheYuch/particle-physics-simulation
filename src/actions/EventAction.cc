@@ -1,9 +1,9 @@
-#include "EventAction.hh"
+#include "actions/EventAction.hh"
 
 #include <G4Event.hh>
 #include <G4RunManager.hh>
 
-#include "RootManager.hh"
+#include "utils/RootManager.hh"
 
 namespace Test
 {

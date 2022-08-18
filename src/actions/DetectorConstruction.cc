@@ -1,4 +1,4 @@
-#include "DetectorConstruction.hh"
+#include "actions/DetectorConstruction.hh"
 
 #include <G4VisAttributes.hh>
 #include <G4Colour.hh>

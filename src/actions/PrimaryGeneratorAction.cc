@@ -1,4 +1,4 @@
-#include "PrimaryGeneratorAction.hh"
+#include "actions/PrimaryGeneratorAction.hh"
 
 #include <G4LogicalVolumeStore.hh>
 #include <G4LogicalVolume.hh>

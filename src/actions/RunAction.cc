@@ -1,5 +1,5 @@
-#include "RunAction.hh"
-#include "RootManager.hh"
+#include "actions/RunAction.hh"
+#include "utils/RootManager.hh"
 
 class G4Run;
 

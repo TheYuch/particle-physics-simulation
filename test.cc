@@ -6,8 +6,8 @@
 #include <G4VisExecutive.hh>
 #include <G4UIExecutive.hh>
 
-#include "DetectorConstruction.hh"
-#include "ActionInitialization.hh"
+#include "actions/DetectorConstruction.hh"
+#include "actions/ActionInitialization.hh"
 
 #include "FTFP_BERT.hh"
 #include <G4OpticalPhysics.hh>

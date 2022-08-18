@@ -30,9 +30,11 @@ include("${ROOT_DIR}/RootMacros.cmake")
 # Include directories
 #
 include_directories(${PROJECT_SOURCE_DIR}/include
+                    ${PROJECT_SOURCE_DIR}/include/actions
                     ${PROJECT_SOURCE_DIR}/include/detectors
                     ${PROJECT_SOURCE_DIR}/include/hitdata
                     ${PROJECT_SOURCE_DIR}/include/rootdata
+                    ${PROJECT_SOURCE_DIR}/include/utils
                     ${Geant4_INCLUDE_DIR}
                     ${ROOT_INCLUDE_DIRS})
 
@@ -40,8 +42,15 @@ include_directories(${PROJECT_SOURCE_DIR}/include
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 #
-file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/src/hitdata/*.cc)
-file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/*.hh ${PROJECT_SOURCE_DIR}/include/hitdata/*.hh)
+file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc
+                  ${PROJECT_SOURCE_DIR}/src/actions/*.cc
+                  ${PROJECT_SOURCE_DIR}/src/hitdata/*.cc
+                  ${PROJECT_SOURCE_DIR}/src/utils/*.cc)
+file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.hh
+                  ${PROJECT_SOURCE_DIR}/include/actions/*.hh
+                  ${PROJECT_SOURCE_DIR}/include/detectors/*.hh
+                  ${PROJECT_SOURCE_DIR}/include/hitdata/*.hh
+                  ${PROJECT_SOURCE_DIR}/include/utils/*.hh)
 
 file(GLOB ROOT_DATA_SOURCES ${PROJECT_SOURCE_DIR}/src/rootdata/*.cc)
 file(GLOB ROOT_DATA_HEADERS ${PROJECT_SOURCE_DIR}/include/rootdata/*.hh)
@@ -63,7 +72,7 @@ root_generate_dictionary(genRootDict ${ROOT_DATA_HEADERS}
 # Add and link the executable
 #
 add_executable(test test.cc ${SOURCES} ${HEADERS})
-target_link_libraries(test ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} RootDict) # new - added root
+target_link_libraries(test ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} RootDict) # TODO: separate lines as in PIONEER git repo? make root independent of geant4
 
 
 #----------------------------------------------------------------------------
