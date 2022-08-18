@@ -6,14 +6,11 @@
 
 class G4Step;
 
-class SipmRootData;
-
 namespace Test
 {
 
 class SipmHitData : public HitData
 {
-friend class ::SipmRootData;
 public:
     SipmHitData() = delete;
     SipmHitData(G4Step* step);

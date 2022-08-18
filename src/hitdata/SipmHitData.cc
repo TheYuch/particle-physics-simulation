@@ -70,7 +70,7 @@ void SipmHitData::ConvertToRootData(DetectorHitsCollection* hitsCollection)
             data->Initialize(detectorID);
             detectorMap[detectorID] = data;
         }
-        data->Update(sipmHitData);
+        data->Update(sipmHitData->fTime, sipmHitData->fEdep);
     }
 }
 

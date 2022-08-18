@@ -75,7 +75,7 @@ void CaloHitData::ConvertToRootData(DetectorHitsCollection* hitsCollection)
             data->Initialize(detectorID);
             detectorMap[detectorID] = data;
         }
-        data->Update(caloHitData, ancestorID);
+        data->Update(caloHitData->fEdep, ancestorID);
     }
 }
 

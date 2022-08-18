@@ -5,11 +5,6 @@
 #include <map>
 // #include <TVector3.h>
 
-namespace Test
-{
-    class CaloHitData;
-}
-
 class CaloRootData : public TObject
 {
 private:
@@ -23,7 +18,7 @@ public:
     ~CaloRootData();
 
     void Initialize(Int_t id);
-    void Update(Test::CaloHitData* caloHitData, Int_t ancestorID);
+    void Update(Float_t edep, Int_t ancestorID);
 
     virtual void Clear(Option_t* option="") override;
     virtual void Print(Option_t* option="") const override;

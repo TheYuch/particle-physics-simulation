@@ -1,7 +1,5 @@
 #include "rootdata/CaloRootData.hh"
 
-#include "hitdata/CaloHitData.hh"
-
 #include <iostream>
 
 ClassImp(CaloRootData)
@@ -19,10 +17,10 @@ void CaloRootData::Initialize(Int_t id)
     detectorID = id;
 }
 
-void CaloRootData::Update(Test::CaloHitData* caloHitData, Int_t ancestorID)
+void CaloRootData::Update(Float_t edep, Int_t ancestorID)
 {
-    totalEdep += caloHitData->fEdep;
-    showerEdeps[ancestorID] += caloHitData->fEdep;
+    totalEdep += edep;
+    showerEdeps[ancestorID] += edep;
 }
 
 void CaloRootData::Clear(Option_t* option)

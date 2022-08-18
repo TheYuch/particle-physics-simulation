@@ -1,7 +1,5 @@
 #include "rootdata/SipmRootData.hh"
 
-#include "hitdata/SipmHitData.hh"
-
 #include <iostream>
 
 ClassImp(SipmRootData)
@@ -21,12 +19,12 @@ void SipmRootData::Initialize(Int_t id)
     detectorID = id;
 }
 
-void SipmRootData::Update(Test::SipmHitData* sipmHitData)
+void SipmRootData::Update(Float_t time, Float_t edep)
 {
-    nHits ++;
-    times.push_back(sipmHitData->fTime);
+    nHits++;
+    times.push_back(time);
 
-    totalEdep += sipmHitData->fEdep;
+    totalEdep += edep;
 }
 
 void SipmRootData::Clear(Option_t* option)

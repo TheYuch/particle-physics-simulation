@@ -2,11 +2,6 @@
 
 #include <TObject.h>
 
-namespace Test
-{
-    class SipmHitData;
-}
-
 class SipmRootData : public TObject
 {
 private:
@@ -22,7 +17,7 @@ public:
     ~SipmRootData();
 
     void Initialize(Int_t id);
-    void Update(Test::SipmHitData* sipmHitData);
+    void Update(Float_t time, Float_t edep);
 
     virtual void Clear(Option_t* option="") override;
     virtual void Print(Option_t* option="") const override;

@@ -6,14 +6,11 @@
 
 class G4Step;
 
-class CaloRootData;
-
 namespace Test
 {
 
 class CaloHitData : public HitData
 {
-friend class ::CaloRootData;
 public:
     CaloHitData() = delete;
     CaloHitData(G4Step* step);
