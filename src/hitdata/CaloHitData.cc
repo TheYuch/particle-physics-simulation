@@ -1,4 +1,4 @@
-#include "detectors/hitdata/CaloHitData.hh"
+#include "hitdata/CaloHitData.hh"
 
 #include <G4Step.hh>
 #include <G4OpticalPhoton.hh>

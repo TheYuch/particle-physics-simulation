@@ -1,6 +1,6 @@
 #include "rootdata/SipmRootData.hh"
 
-#include "detectors/hitdata/SipmHitData.hh"
+#include "hitdata/SipmHitData.hh"
 
 #include <iostream>
 

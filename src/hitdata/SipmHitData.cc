@@ -1,4 +1,4 @@
-#include "detectors/hitdata/SipmHitData.hh"
+#include "hitdata/SipmHitData.hh"
 
 #include <G4Step.hh>
 #include <G4OpticalPhoton.hh>

@@ -31,7 +31,7 @@ include("${ROOT_DIR}/RootMacros.cmake")
 #
 include_directories(${PROJECT_SOURCE_DIR}/include
                     ${PROJECT_SOURCE_DIR}/include/detectors
-                    ${PROJECT_SOURCE_DIR}/include/detectors/hitdata
+                    ${PROJECT_SOURCE_DIR}/include/hitdata
                     ${PROJECT_SOURCE_DIR}/include/rootdata
                     ${Geant4_INCLUDE_DIR}
                     ${ROOT_INCLUDE_DIRS})
@@ -40,8 +40,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 #
-file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/src/detectors/*.cc ${PROJECT_SOURCE_DIR}/src/detectors/hitdata/*.cc)
-file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/hitdata/*.hh)
+file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/src/hitdata/*.cc)
+file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/include/detectors/*.hh ${PROJECT_SOURCE_DIR}/include/hitdata/*.hh)
 
 file(GLOB ROOT_DATA_SOURCES ${PROJECT_SOURCE_DIR}/src/rootdata/*.cc)
 file(GLOB ROOT_DATA_HEADERS ${PROJECT_SOURCE_DIR}/include/rootdata/*.hh)

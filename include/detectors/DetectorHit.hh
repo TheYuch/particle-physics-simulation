@@ -5,7 +5,7 @@
 #include <G4Allocator.hh>
 #include <G4ThreeVector.hh>
 
-#include "detectors/hitdata/HitData.hh"
+#include "hitdata/HitData.hh"
 
 class G4Step;
 
@@ -34,7 +34,7 @@ protected:
 
 typedef G4THitsCollection<DetectorHit> DetectorHitsCollection;
 
-extern G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator;
+static G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator = nullptr;
 
 inline void* DetectorHit::operator new(size_t)
 {

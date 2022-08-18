@@ -12,8 +12,9 @@
 #include <G4SystemOfUnits.hh>
 
 #include <G4SDManager.hh>
-#include "detectors/CaloSD.hh"
-#include "detectors/SipmSD.hh"
+#include "detectors/SensitiveDetector.hh"
+#include "hitdata/CaloHitData.hh"
+#include "hitdata/SipmHitData.hh"
 
 namespace Test
 {
@@ -231,15 +232,15 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 void DetectorConstruction::ConstructSDandField()
 {
-  CaloSD* caloSD = new CaloSD("Calorimeter");
+  // TODO: use GDML file and map strings to HitData derived class types, then run a for loop to create all SDs
+
+  SensitiveDetector<CaloHitData>* caloSD = new SensitiveDetector<CaloHitData>("Calorimeter");
   G4SDManager::GetSDMpointer()->AddNewDetector(caloSD);
   fCaloLV->SetSensitiveDetector(caloSD);
 
-  SipmSD* sipmSD = new SipmSD("SiPM");
+  SensitiveDetector<SipmHitData>* sipmSD = new SensitiveDetector<SipmHitData>("SiPM");
   G4SDManager::GetSDMpointer()->AddNewDetector(sipmSD);
   fSipmLV->SetSensitiveDetector(sipmSD);
-
-  // TODO - make abstract, and/or use data json files / gdml
 }
 
 }

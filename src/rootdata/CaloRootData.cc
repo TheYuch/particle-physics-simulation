@@ -1,6 +1,6 @@
 #include "rootdata/CaloRootData.hh"
 
-#include "detectors/hitdata/CaloHitData.hh"
+#include "hitdata/CaloHitData.hh"
 
 #include <iostream>
 

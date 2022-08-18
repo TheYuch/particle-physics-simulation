@@ -1,6 +1,6 @@
 #pragma once
 
-#include "detectors/hitdata/HitData.hh"
+#include "hitdata/HitData.hh"
 
 #include "detectors/DetectorHit.hh"
 
