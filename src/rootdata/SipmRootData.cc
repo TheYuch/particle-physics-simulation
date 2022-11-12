@@ -19,12 +19,15 @@ void SipmRootData::Initialize(Int_t id)
     detectorID = id;
 }
 
-void SipmRootData::Update(Float_t time, Float_t edep)
+void SipmRootData::UpdateConventional(Float_t edep)
+{
+    totalEdep += edep;
+}
+
+void SipmRootData::UpdateOptical(Float_t time)
 {
     nHits++;
     times.push_back(time);
-
-    totalEdep += edep;
 }
 
 void SipmRootData::Clear(Option_t* option)

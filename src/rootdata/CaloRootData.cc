@@ -17,10 +17,10 @@ void CaloRootData::Initialize(Int_t id)
     detectorID = id;
 }
 
-void CaloRootData::Update(Float_t edep, Int_t ancestorID)
+void CaloRootData::Update(Float_t showerEdep)
 {
-    totalEdep += edep;
-    showerEdeps[ancestorID] += edep;
+    totalEdep += showerEdep;
+    showerEdeps.push_back(showerEdep);
 }
 
 void CaloRootData::Clear(Option_t* option)
@@ -36,8 +36,8 @@ void CaloRootData::Print(Option_t* option) const
         << "\tDetector ID: " << detectorID << std::endl
         << "\tTotal Edep: " << totalEdep << std::endl
         << "\tShower Edeps:" << std::endl;
-    for (auto const& showerEdepPair : showerEdeps)
+    for (size_t i = 0; i < showerEdeps.size(); i++)
     {
-        std::cout << "\t\tAncestor Track ID: " << showerEdepPair.first << ", Edep: " << showerEdepPair.second << std::endl;
+        std::cout << "\t\tEdep: " << showerEdeps.at(i) << std::endl;
     }
 }

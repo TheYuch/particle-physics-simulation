@@ -2,7 +2,6 @@
 
 #include <TObject.h>
 
-#include <map>
 // #include <TVector3.h>
 
 class CaloRootData : public TObject
@@ -11,14 +10,14 @@ private:
     Int_t detectorID;
 
     Float_t totalEdep;
-    std::map<Int_t, Float_t> showerEdeps;
+    std::vector<Float_t> showerEdeps;
 
 public:
     CaloRootData();
     ~CaloRootData();
 
     void Initialize(Int_t id);
-    void Update(Float_t edep, Int_t ancestorID);
+    void Update(Float_t showerEdep);
 
     virtual void Clear(Option_t* option="") override;
     virtual void Print(Option_t* option="") const override;

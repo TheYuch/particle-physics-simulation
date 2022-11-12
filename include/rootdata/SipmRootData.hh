@@ -17,7 +17,8 @@ public:
     ~SipmRootData();
 
     void Initialize(Int_t id);
-    void Update(Float_t time, Float_t edep);
+    void UpdateConventional(Float_t edep);
+    void UpdateOptical(Float_t time);
 
     virtual void Clear(Option_t* option="") override;
     virtual void Print(Option_t* option="") const override;

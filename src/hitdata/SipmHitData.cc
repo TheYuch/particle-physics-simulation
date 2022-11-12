@@ -18,11 +18,14 @@ SipmHitData::SipmHitData(G4Step* step)
     if (fParticleDefinition == G4OpticalPhoton::OpticalPhotonDefinition())
     {
         fTime = step->GetPostStepPoint()->GetGlobalTime();
+        fEdep = 0;
+        
         step->GetTrack()->SetTrackStatus(G4TrackStatus::fKillTrackAndSecondaries);
     }
     else
     {
         fEdep = step->GetTotalEnergyDeposit();
+        fTime = 0;
     }
     // TODO: time only stored for optical photons, and edep only stored for edep - unless not???? would this if statement be more arbitrary/confusing??
 }
@@ -36,8 +39,8 @@ void SipmHitData::Print()
         << "Sipm Geant4 Hit Data:" << G4endl
         << "\tDetector ID: " << fDetectorID << G4endl
         << "\tParticle Name: " << fParticleDefinition->GetParticleName() << G4endl
-        << "\tHit Time (if optical):" << G4BestUnit(fTime, "Time")
-        << "\tEnergy Deposit (if not optical): " << G4BestUnit(fEdep, "Energy") << G4endl;
+        << "\tOptical Hit Time:" << G4BestUnit(fTime, "Time") << G4endl
+        << "\tNon-Optical Energy Deposit: " << G4BestUnit(fEdep, "Energy") << G4endl;
 }
 
 G4bool SipmHitData::IgnoreStep(G4Step* step) // Note: steps with edep <= 0 are still kept to allow ancestor tracking to work
@@ -70,7 +73,10 @@ void SipmHitData::ConvertToRootData(DetectorHitsCollection* hitsCollection)
             data->Initialize(detectorID);
             detectorMap[detectorID] = data;
         }
-        data->Update(sipmHitData->fTime, sipmHitData->fEdep);
+        if (sipmHitData->fParticleDefinition == G4OpticalPhoton::OpticalPhotonDefinition())
+            data->UpdateOptical(sipmHitData->fTime);
+        else
+            data->UpdateConventional(sipmHitData->fEdep);
     }
 }
 
