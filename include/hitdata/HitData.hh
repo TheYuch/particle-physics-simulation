@@ -3,9 +3,6 @@
 #include <G4Step.hh>
 #include <G4Types.hh>
 
-namespace Test
-{
-
 class HitData
 {
 public:
@@ -21,5 +18,3 @@ public:
 protected:
     G4int fDetectorID;
 };
-
-}

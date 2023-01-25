@@ -6,9 +6,6 @@
 
 class G4Step;
 
-namespace Test
-{
-
 class CaloHitData : public HitData
 {
 public:
@@ -26,5 +23,3 @@ private:
     G4int fParentID;
     G4double fEdep;
 };
-
-}

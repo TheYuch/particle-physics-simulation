@@ -10,9 +10,6 @@ class G4HCofThisEvent;
 class G4String;
 class G4TouchableHistory;
 
-namespace Test
-{
-
 template<class HitDataT>
 class SensitiveDetector : public G4VSensitiveDetector
 {
@@ -56,5 +53,3 @@ public:
 private:
     DetectorHitsCollection* fHitsCollection;
 };
-
-}

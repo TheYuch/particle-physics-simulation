@@ -5,9 +5,6 @@
 class G4VPhysicalVolume;
 class G4LogicalVolume;
 
-namespace Test
-{
-
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
@@ -24,5 +21,3 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     G4LogicalVolume* fCaloLV = nullptr;
     G4LogicalVolume* fSipmLV = nullptr;
 };
-
-}

@@ -16,9 +16,6 @@
 #include "hitdata/CaloHitData.hh"
 #include "hitdata/SipmHitData.hh"
 
-namespace Test
-{
-
 DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction()
 {}
@@ -241,6 +238,4 @@ void DetectorConstruction::ConstructSDandField()
   SensitiveDetector<SipmHitData>* sipmSD = new SensitiveDetector<SipmHitData>("SiPM");
   G4SDManager::GetSDMpointer()->AddNewDetector(sipmSD);
   fSipmLV->SetSensitiveDetector(sipmSD);
-}
-
 }

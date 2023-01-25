@@ -8,9 +8,6 @@
 #include "utils/RootManager.hh"
 #include "rootdata/CaloRootData.hh"
 
-namespace Test
-{
-
 CaloHitData::CaloHitData(G4Step* step)
 : HitData(step)
 {
@@ -86,6 +83,4 @@ void CaloHitData::ConvertToRootData(DetectorHitsCollection* hitsCollection)
             data->Update(showerEdep);
         }
     }
-}
-
 }

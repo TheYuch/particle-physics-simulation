@@ -11,9 +11,6 @@
 
 #include "Randomize.hh"
 
-namespace Test
-{
-
 PrimaryGeneratorAction::PrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction()
 {
@@ -49,6 +46,4 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     -worldZHalfLength));
 
   fParticleGun->GeneratePrimaryVertex(anEvent);
-}
-
 }

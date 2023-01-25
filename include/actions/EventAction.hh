@@ -4,9 +4,6 @@
 
 class G4Event;
 
-namespace Test
-{
-
 class EventAction : public G4UserEventAction
 {
   public:
@@ -16,5 +13,3 @@ class EventAction : public G4UserEventAction
     void BeginOfEventAction(const G4Event* event) override;
     void EndOfEventAction(const G4Event* event) override;
 };
-
-}

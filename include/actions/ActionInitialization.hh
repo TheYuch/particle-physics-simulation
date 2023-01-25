@@ -2,9 +2,6 @@
 
 #include <G4VUserActionInitialization.hh>
 
-namespace Test
-{
-
 class ActionInitialization : public G4VUserActionInitialization
 {
   public:
@@ -14,5 +11,3 @@ class ActionInitialization : public G4VUserActionInitialization
     void BuildForMaster() const override;
     void Build() const override;
 };
-
-}

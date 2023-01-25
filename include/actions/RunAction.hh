@@ -4,9 +4,6 @@
 
 class G4Run;
 
-namespace Test
-{
-
 class RunAction : public G4UserRunAction
 {
   public:
@@ -16,5 +13,3 @@ class RunAction : public G4UserRunAction
     void BeginOfRunAction(const G4Run*) override;
     void EndOfRunAction(const G4Run*) override;
 };
-
-}

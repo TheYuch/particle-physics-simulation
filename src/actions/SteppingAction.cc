@@ -5,9 +5,6 @@
 #include <G4StepPoint.hh>
 #include <G4VProcess.hh>
 
-namespace Test
-{
-
 SteppingAction::SteppingAction()
 : G4UserSteppingAction()
 {}
@@ -35,6 +32,4 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
       }
     }
   } */
-}
-
 }

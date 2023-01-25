@@ -5,9 +5,6 @@ class G4ParticleGun;
 class G4Event;
 class G4Box;
 
-namespace Test
-{
-
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
   public:
@@ -21,5 +18,3 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
   private:
     G4ParticleGun* fParticleGun = nullptr; // pointer a to G4 gun class
 };
-
-}

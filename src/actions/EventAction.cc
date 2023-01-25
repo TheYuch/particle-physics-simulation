@@ -5,9 +5,6 @@
 
 #include "utils/RootManager.hh"
 
-namespace Test
-{
-
 EventAction::EventAction()
 : G4UserEventAction()
 {}
@@ -25,6 +22,4 @@ void EventAction::EndOfEventAction(const G4Event*)
   // TODO: event info
 
   rootManager->Fill();
-}
-
 }

@@ -8,9 +8,6 @@
 #include "utils/RootManager.hh"
 #include "rootdata/SipmRootData.hh"
 
-namespace Test
-{
-
 SipmHitData::SipmHitData(G4Step* step)
 : HitData(step)
 {
@@ -78,6 +75,4 @@ void SipmHitData::ConvertToRootData(DetectorHitsCollection* hitsCollection)
         else
             data->UpdateConventional(sipmHitData->fEdep);
     }
-}
-
 }

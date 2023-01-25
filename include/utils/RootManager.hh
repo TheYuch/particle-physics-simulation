@@ -11,9 +11,6 @@ class TFile;
 class TTree;
 class TObject;
 
-namespace Test
-{
-
 class RootManager {
 friend class G4ThreadLocalSingleton<RootManager>;
 public:
@@ -51,5 +48,3 @@ private:
     // data fields
     std::map<Constants::RootDataType, TClonesArray*> fRootDataVecs;
 };
-
-}

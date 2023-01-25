@@ -19,9 +19,6 @@ namespace {
     G4Mutex mutexFileIO = G4MUTEX_INITIALIZER;
 }
 
-namespace Test
-{
-
 RootManager::RootManager()
 : fIsOpen(false)
 , fTheFile(nullptr)
@@ -183,6 +180,4 @@ TObject* RootManager::GetNewRootData(Constants::RootDataType rootDataType)
 {
     TClonesArray* rootDataVec = fRootDataVecs[rootDataType];
     return rootDataVec->ConstructedAt(rootDataVec->GetEntries()); // for example, fCaloVec->GetEntries() is index of element past the last one, which the function gets, maybe allocates, and returns
-}
-
 }

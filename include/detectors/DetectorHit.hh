@@ -9,9 +9,6 @@
 
 class G4Step;
 
-namespace Test
-{
-
 class DetectorHit : public G4VHit
 {
 public:
@@ -45,6 +42,4 @@ inline void* DetectorHit::operator new(size_t)
 inline void DetectorHit::operator delete(void* hit)
 {
     DetectorHitAllocator->FreeSingle((DetectorHit*)hit);
-}
-
 }

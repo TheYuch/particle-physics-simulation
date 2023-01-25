@@ -6,9 +6,6 @@
 
 class G4Step;
 
-namespace Test
-{
-
 class SipmHitData : public HitData
 {
 public:
@@ -26,5 +23,3 @@ private:
     G4double fTime;
     G4double fEdep;
 };
-
-}

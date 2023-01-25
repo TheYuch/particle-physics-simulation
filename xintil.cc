@@ -12,13 +12,11 @@
 #include "FTFP_BERT.hh"
 #include <G4OpticalPhysics.hh>
 
-using namespace Test;
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 int main(int argc,char** argv)
 {
-  G4cout << "=================TEST SIMULATION=================" << G4endl;
+  G4cout << "=================XINTIL SIMULATION=================" << G4endl;
 
   ROOT::EnableThreadSafety();
 
@@ -57,19 +55,19 @@ int main(int argc,char** argv)
     try // new: init.mac with beamOn shortcut
     {
       int nOfEvents = std::stoi(argv[1]);
-      UImanager->ApplyCommand("/control/execute ../macros/init.mac");
+      UImanager->ApplyCommand("/control/execute ./macros/init.mac");
       UImanager->ApplyCommand("/run/beamOn " + std::to_string(nOfEvents));
     }
     catch (...)
     {
-      G4String fileName = argv[1]; // execute: ./test ../macros/###.mac
+      G4String fileName = argv[1];
       UImanager->ApplyCommand("/control/execute " + fileName);
     }
   }
   else // interactive mode
   {
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-    UImanager->ApplyCommand("/control/execute ../macros/vis.mac");
+    UImanager->ApplyCommand("/control/execute ./macros/vis.mac");
     ui->SessionStart();
     delete ui;
   }
@@ -78,7 +76,7 @@ int main(int argc,char** argv)
   // TERMINATION
   // Free the store: user actions, physics_list and detector_description are
   // owned and deleted by the run manager, so they should not be deleted
-  // in the main() program !
+  // in the main() program!
   delete visManager;
   delete runManager;
 

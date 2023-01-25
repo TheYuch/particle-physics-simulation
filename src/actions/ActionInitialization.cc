@@ -5,9 +5,6 @@
 #include "actions/EventAction.hh"
 #include "actions/SteppingAction.hh"
 
-namespace Test
-{
-
 ActionInitialization::ActionInitialization()
 : G4VUserActionInitialization()
 {}
@@ -27,6 +24,4 @@ void ActionInitialization::Build() const
   SetUserAction(new RunAction);
   SetUserAction(new EventAction);
   SetUserAction(new SteppingAction);
-}
-
 }
