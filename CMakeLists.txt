@@ -8,8 +8,10 @@ project(${name})
 
 
 #----------------------------------------------------------------------------
-# Geant4
+# Locate and include packages
 #
+
+# Geant4
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
   find_package(Geant4 REQUIRED ui_all vis_all)
@@ -19,18 +21,16 @@ endif()
 
 include(${Geant4_USE_FILE})
 
-
-#----------------------------------------------------------------------------
 # ROOT
-#
 find_package(ROOT REQUIRED)
 include(${ROOT_USE_FILE})
 include("${ROOT_DIR}/RootMacros.cmake")
 
 
 #----------------------------------------------------------------------------
-# Include directories
+# Locate sources and headers for this project
 #
+
 include_directories(${PROJECT_SOURCE_DIR}/include
                     ${PROJECT_SOURCE_DIR}/include/actions
                     ${PROJECT_SOURCE_DIR}/include/detectors
@@ -40,10 +40,6 @@ include_directories(${PROJECT_SOURCE_DIR}/include
                     ${Geant4_INCLUDE_DIR}
                     ${ROOT_INCLUDE_DIRS})
 
-
-#----------------------------------------------------------------------------
-# Locate sources and headers for this project
-#
 file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cc
                   ${PROJECT_SOURCE_DIR}/src/actions/*.cc
                   ${PROJECT_SOURCE_DIR}/src/hitdata/*.cc

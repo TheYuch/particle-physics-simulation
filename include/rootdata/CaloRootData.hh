@@ -24,5 +24,5 @@ public:
 
     // TODO: get functions for all data attributes for post-Geant4 processing
 
-    ClassDef(CaloRootData, 1);
+    ClassDefOverride(CaloRootData, 1);
 };

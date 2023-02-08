@@ -23,5 +23,5 @@ public:
     virtual void Clear(Option_t* option="") override;
     virtual void Print(Option_t* option="") const override;
 
-    ClassDef(SipmRootData, 1);
+    ClassDefOverride(SipmRootData, 1);
 };
